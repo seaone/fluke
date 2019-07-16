@@ -1,7 +1,6 @@
 import "phaser";
 import GameConfig = Phaser.Types.Core.GameConfig;
-import RenderConfig = Phaser.Types.Core.RenderConfig;
-import {GameScene} from "./game/gameScene";
+import {GameScene} from "./gameScene/gameScene";
 
 const config: GameConfig = {
   type: Phaser.AUTO,
@@ -11,6 +10,9 @@ const config: GameConfig = {
   parent: 'game',
   physics: {
     default: "arcade",
+    // arcade: {
+    //   debug: true,
+    // }
   },
   scene: [GameScene],
   autoFocus: true,
@@ -25,6 +27,7 @@ export class FlukeGame extends Phaser.Game {
     super(config);
   }
 }
+
 window.onload = () => {
   const game = new FlukeGame(config);
 };
