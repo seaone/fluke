@@ -3,7 +3,7 @@ import { MainTitle } from "../objects/mainTitle";
 import { Platform } from "../objects/platform";
 import { Fluke } from "../player/fluke";
 import { gameOptions } from "./gameOptions";
-const _assetsPrefix = 'game_assets';
+const _assetsPrefix = 'assets/game_assets';
 
 export class GameScene extends Phaser.Scene {
 

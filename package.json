@@ -15,7 +15,7 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack --watch & live-server --port=8086",
-    "deploy": "npm run build && cp dist/app.js ../wrike-ws-host-app/web/assets/wrike_game/app.js && cp -R game_assets ../wrike-ws-host-app/web/assets/wrike_game/"
+    "deploy": "npm run build && cp dist/app.js ../wrike-ws-host-app/web/assets/wrike_game/app.js && cp -R assets/game_assets ../wrike-ws-host-app/web/assets/"
   },
   "author": "",
   "license": "MIT"
