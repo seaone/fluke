@@ -2,6 +2,7 @@ import "phaser";
 import { MainTitle } from "../objects/mainTitle";
 import { Platform } from "../objects/platform";
 import { Fluke } from "../player/fluke";
+import { Coin } from "../objects/coin";
 import { gameOptions } from "./gameOptions";
 const _assetsPrefix = 'assets/game_assets';
 
@@ -10,7 +11,7 @@ export class GameScene extends Phaser.Scene {
   fluke: Fluke;
   platform: Platform;
   private mainTitle: MainTitle;
-  // private coin: Coin;
+  private coin: Coin;
   score: number = 0;
   counter = 0;
   scoreText: Phaser.GameObjects.BitmapText;
@@ -35,7 +36,7 @@ export class GameScene extends Phaser.Scene {
 
   create(): void {
     this.platform = new Platform(this);
-    // this.coin = new Coin(this);
+    this.coin = new Coin(this);
     this.fluke = new Fluke(this);
     this.physics.add.collider(this.fluke.sprite, this.platform.platformGroup.getChildren(), (fluke, pl) => {
       let platform = pl as Phaser.Physics.Arcade.Sprite;
@@ -70,10 +71,10 @@ export class GameScene extends Phaser.Scene {
 
   update(): void {
     this.updateCounter();
+    this.mainTitle.update();
     this.fluke.update();
     this.platform.update(this.gameSpeed);
-    this.mainTitle.update();
-    // this.coin.update();
+    this.coin.update();
     this.score = (this.counter / 5) ^ 0;
     this.scoreText.setText(`SCORE: ${this.score}`);
 

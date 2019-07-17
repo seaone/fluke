@@ -5,14 +5,13 @@ export class Fluke {
   public sprite: Phaser.Physics.Arcade.Sprite;
   private jumpTimer: number;
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
-  private gameOptions: any = gameOptions;
 
   constructor(private _scene: Phaser.Scene) {
     this.create(this._scene);
   }
 
   private create(scene: Phaser.Scene): void {
-    this.sprite = scene.physics.add.sprite(this.gameOptions.playerStartPosition, +scene.game.config.height / 2, "fluke").setScale(4);
+    this.sprite = scene.physics.add.sprite(gameOptions.playerStartPosition, +scene.game.config.height / 2, "fluke").setScale(4);
     this.sprite.body.setSize(16, 18);
     this.sprite.body.setOffset(9, 7);
 
@@ -57,7 +56,7 @@ export class Fluke {
     const isPressed = this.cursors.space.isDown || this.cursors.up.isDown || this._scene.input.activePointer.leftButtonDown();
 
     if (isPressed && this.sprite.body && !gameOptions.isStarted) {
-      this.sprite.setGravityY(this.gameOptions.playerGravity);
+      this.sprite.setGravityY(gameOptions.playerGravity);
       gameOptions.isStarted = true;
     }
 
@@ -66,7 +65,7 @@ export class Fluke {
         this.jumpTimer = 1;
       } else if (this.jumpTimer > 0 && this.jumpTimer < 30) {
         this.jumpTimer++;
-        this.sprite.setVelocityY(this.gameOptions.jumpForce * -1 + (this.jumpTimer * 4));
+        this.sprite.setVelocityY(gameOptions.jumpForce * -1 + (this.jumpTimer * 4));
       }
     } else {
       this.jumpTimer = 0;
@@ -80,7 +79,7 @@ export class Fluke {
       this._scene.scene.start(sceneName);
     }
 
-    this.sprite.x = this.gameOptions.playerStartPosition;
+    this.sprite.x = gameOptions.playerStartPosition;
   }
 
   private animate(): void {
