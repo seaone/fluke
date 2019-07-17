@@ -59,7 +59,7 @@ export class Platform {
       platform.visible = true;
       this.platformPool.remove(platform);
     } else {
-      platform = this._scene.physics.add.sprite(posX, posY, "platform").setScale(2);
+      platform = this._scene.physics.add.sprite(posX, posY, "platform").setScale(4);
       platform.setImmovable(true);
       platform.setVelocityX(this.gameOptions.platformStartSpeed * -1);
       this.platformGroup.add(platform);
