@@ -6,6 +6,7 @@ import {CoinGroup} from "../objects/coinGroup";
 import { gameOptions } from "./gameOptions";
 const _assetsPrefix = 'assets/game_assets';
 import {GameState} from '../gameState';
+import {HintTitle} from "../objects/hintTitle";
 
 export class GameScene extends Phaser.Scene {
   fluke: Fluke;
@@ -23,6 +24,7 @@ export class GameScene extends Phaser.Scene {
   coinValue = 50;
   coinFrequency = 150;
   private themeSound: Phaser.Sound.BaseSound;
+  private hintTitle: HintTitle;
 
   constructor() {
     super({
@@ -34,6 +36,7 @@ export class GameScene extends Phaser.Scene {
     this.load.bitmapFont('pixelFont', `${_assetsPrefix}/font/font.png`, `${_assetsPrefix}/font/font.fnt`);
     this.load.image("platform", `${_assetsPrefix}/platform.png`);
     this.load.image("mainTitle", `${_assetsPrefix}/wrikey_dog_title.png`);
+    this.load.image("hintTitle", `${_assetsPrefix}/hint_title.png`);
     this.load.spritesheet("coin", `${_assetsPrefix}/wrike_coin.png`, { frameWidth: 12, frameHeight: 12 });
     this.load.spritesheet("fluke", `${_assetsPrefix}/fluke.png`,{ frameWidth: 32, frameHeight: 32 });
     this.load.audio("coinSound1", `${_assetsPrefix}/sound/coin_1.wav`);
@@ -67,6 +70,7 @@ export class GameScene extends Phaser.Scene {
 
     this.scoreText = this.add.bitmapText(24, 24, 'pixelFont', `SCORE: ${this.score}`, 16);
     this.mainTitle = new MainTitle(this);
+    this.hintTitle = new HintTitle(this);
     this.themeSound = this.sound.add('theme');
   }
 
@@ -108,6 +112,7 @@ export class GameScene extends Phaser.Scene {
     }
 
     this.mainTitle.update();
+    this.hintTitle.update();
     this.fluke.update();
     this.platform.update();
     this.coinGroup.update();
