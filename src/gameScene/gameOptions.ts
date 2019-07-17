@@ -1,5 +1,7 @@
+import {GameState} from '../gameState';
+
 export const gameOptions = {
-  isStarted: false,
+  gameState: GameState.initial,
   playerStartPosition: 160,
   jumpForce: 250,
   playerGravity: 900,

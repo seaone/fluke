@@ -1,5 +1,6 @@
 import "phaser";
 import {gameOptions} from "../gameScene/gameOptions";
+import {GameState} from '../gameState';
 
 export class Fluke {
   public sprite: Phaser.Physics.Arcade.Sprite;
@@ -55,9 +56,9 @@ export class Fluke {
 
   private jump(): void {
     if (this.cursors.space.isDown || this.cursors.up.isDown || this._scene.input.activePointer.leftButtonDown()) {
-      if (!gameOptions.isStarted) {
+      if (gameOptions.gameState !== GameState.playing) {
         this.sprite.setGravityY(this.gameOptions.playerGravity);
-        gameOptions.isStarted = true;
+        gameOptions.gameState = GameState.playing;
       }
 
       if (this.sprite.body.touching.down && this.jumpTimer === 0) {
@@ -73,7 +74,7 @@ export class Fluke {
 
   private respawn(sceneName: string): void {
     if (this.sprite.y > this._scene.game.config.height) {
-      gameOptions.isStarted = false;
+      gameOptions.gameState = GameState.over;
       this._scene.scene.start(sceneName);
     }
 

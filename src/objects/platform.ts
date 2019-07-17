@@ -1,5 +1,6 @@
 import "phaser";
 import {gameOptions} from "../gameScene/gameOptions";
+import {GameState} from '../gameState';
 
 export class Platform {
   public platformGroup: Phaser.Physics.Arcade.StaticGroup;
@@ -27,6 +28,10 @@ export class Platform {
   }
 
   public update(gameSpeed: number): void {
+    if (gameOptions.gameState !== GameState.playing) {
+      return;
+    }
+
     let minDistance: number = +this._scene.game.config.width;
 
     this.platformGroup.getChildren().forEach((platform: Phaser.Physics.Arcade.Sprite) => {
@@ -42,7 +47,7 @@ export class Platform {
     if (minDistance > this.nextPlatformDistance) {
       let nextPlatformWidth;
 
-      if(gameOptions.isStarted) {
+      if (gameOptions.gameState === GameState.playing) {
         nextPlatformWidth = Phaser.Math.Between(gameOptions.platformSizeRange[0], gameOptions.platformSizeRange[1]);
       } else {
         nextPlatformWidth = gameOptions.platformSizeRange[1];
@@ -72,7 +77,7 @@ export class Platform {
     }
 
     platform.displayWidth = platformWidth;
-    if(gameOptions.isStarted) {
+    if(gameOptions.gameState === GameState.playing) {
       this.nextPlatformDistance = Phaser.Math.Between(gameOptions.spawnRange[0], gameOptions.spawnRange[1]);
     } else {
       this.nextPlatformDistance = gameOptions.spawnRange[0];

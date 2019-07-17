@@ -1,5 +1,6 @@
 import "phaser";
 import {gameOptions} from "../gameScene/gameOptions";
+import {GameState} from '../gameState';
 
 export class MainTitle {
   private sprite: Phaser.Physics.Arcade.Sprite;
@@ -13,7 +14,7 @@ export class MainTitle {
   }
 
   public update(): void {
-    if (this.sprite.body && gameOptions.isStarted) {
+    if (this.sprite.body && GameState.playing) {
       this.sprite.setVelocityX(gameOptions.platformStartSpeed * -1);
     }
 
