@@ -47,10 +47,12 @@ export class GameScene extends Phaser.Scene {
         platform.tint = 0x8BC34A;
       }
     });
-    // this.physics.add.collider(this.fluke.sprite, this.coin.coinGroup.getChildren(), (fluke, coin) => {
-    //   this.score += 100;
-    //   coin.destroy();
-    // });
+
+    this.physics.add.collider(this.fluke.sprite, this.coin.sprite, (fluke, coin) => {
+      this.counter += 1000;
+      coin.destroy();
+    });
+
     this.scoreText = this.add.bitmapText(24, 24, 'pixelFont', `SCORE: ${this.score}`, 16);
     this.mainTitle = new MainTitle(this);
   }
