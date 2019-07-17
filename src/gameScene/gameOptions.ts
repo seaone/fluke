@@ -1,5 +1,6 @@
 export const gameOptions = {
-  playerStartPosition: 200,
+  isStarted: false,
+  playerStartPosition: 160,
   jumpForce: 250,
   playerGravity: 900,
   platformStartSpeed: 350,

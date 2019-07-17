@@ -15,7 +15,6 @@ export class Fluke {
     this.sprite = scene.physics.add.sprite(this.gameOptions.playerStartPosition, +scene.game.config.height / 2, "fluke").setScale(4);
     this.sprite.body.setSize(16, 18);
     this.sprite.body.setOffset(9, 7);
-    this.sprite.setGravityY(this.gameOptions.playerGravity);
 
     this._scene.anims.create({
       key: 'run',
@@ -56,6 +55,11 @@ export class Fluke {
 
   private jump(): void {
     if (this.cursors.space.isDown || this._scene.input.activePointer.leftButtonDown()) {
+      if (!gameOptions.isStarted) {
+        this.sprite.setGravityY(this.gameOptions.playerGravity);
+        gameOptions.isStarted = true;
+      }
+
       if (this.sprite.body.touching.down && this.jumpTimer === 0) {
         this.jumpTimer = 1;
       } else if (this.jumpTimer > 0 && this.jumpTimer < 30) {
@@ -69,6 +73,7 @@ export class Fluke {
 
   private respawn(sceneName: string): void {
     if (this.sprite.y > this._scene.game.config.height) {
+      gameOptions.isStarted = false;
       this._scene.scene.start(sceneName);
     }
 
