@@ -6,6 +6,8 @@ export class Fluke {
   public sprite: Phaser.Physics.Arcade.Sprite;
   private jumpTimer: number;
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+  canDoubleJump = true;
+  jumpCounter = 0;
   private dropSound: Phaser.Sound.BaseSound;
 
   constructor(private _scene: Phaser.Scene) {
@@ -64,13 +66,21 @@ export class Fluke {
     }
 
     if (isPressed) {
-      if (this.sprite.body.touching.down && this.jumpTimer === 0) {
+      if (this.sprite.body.touching.down && this.jumpTimer === 0 || this.canDoubleJump) {
         this.jumpTimer = 1;
+        this.jumpCounter++;
+        this.canDoubleJump = false;
       } else if (this.jumpTimer > 0 && this.jumpTimer < 30) {
         this.jumpTimer++;
         this.sprite.setVelocityY(gameOptions.jumpForce * -1 + (this.jumpTimer * 4));
       }
     } else {
+      this.canDoubleJump = this.jumpCounter < 2;
+
+      if (this.sprite.body.touching.down) {
+        this.jumpCounter = 0;
+      }
+
       this.jumpTimer = 0;
     }
   }

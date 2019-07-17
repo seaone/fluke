@@ -80,7 +80,7 @@ export class GameScene extends Phaser.Scene {
     this.counter = 0;
     this.coinCounter = 0;
     this.level = 1;
-    this.gameSpeed = gameOptions.gameSpeed;
+    gameOptions.gameSpeed = gameOptions.initialGameSpeed;
   }
 
   update(): void {
@@ -104,7 +104,7 @@ export class GameScene extends Phaser.Scene {
     this.score = ((this.counter / 5) ^ 0) + (this.coinCounter * this.coinValue);
     this.scoreText.setText(`SCORE: ${this.score}`);
 
-    this.level = this.counter / this.levelFrameThreshold ^ 0;
-    this.gameSpeed = gameOptions.gameSpeed + this.level * this.levelSpeedIncrease;
+    this.level = (this.counter / this.levelFrameThreshold) ^ 0;
+    gameOptions.gameSpeed = gameOptions.initialGameSpeed + this.level * this.levelSpeedIncrease;
   }
 }
