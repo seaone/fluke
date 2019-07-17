@@ -1,18 +1,21 @@
 import "phaser";
-import {gameOptions} from "./gameOptions";
-import {Fluke} from "../player/fluke";
-import {Platform} from "../objects/platform";
-import {MainTitle} from "../objects/mainTitle";
-import {Coin} from '../objects/coin';
+import { MainTitle } from "../objects/mainTitle";
+import { Platform } from "../objects/platform";
+import { Fluke } from "../player/fluke";
+import { Coin } from "../objects/coin";
+import { gameOptions } from "./gameOptions";
+const _assetsPrefix = 'assets/game_assets';
 import {GameState} from '../gameState';
 
 export class GameScene extends Phaser.Scene {
+
   fluke: Fluke;
   platform: Platform;
   private mainTitle: MainTitle;
-  // private coin: Coin;
+  private coin: Coin;
   score: number = 0;
   counter = 0;
+  coinCounter = 0;
   scoreText: Phaser.GameObjects.BitmapText;
   gameSpeed = gameOptions.platformStartSpeed;
   level = 1;
@@ -26,16 +29,16 @@ export class GameScene extends Phaser.Scene {
   }
 
   preload(): void {
-    this.load.bitmapFont('pixelFont', 'assets/font/font.png', 'assets/font/font.fnt');
-    this.load.image("platform", "/assets/platform.png");
-    this.load.image("mainTitle", "/assets/wrikey_dog_title.png");
-    this.load.spritesheet("coin", "/assets/wrike_coin.png", { frameWidth: 12, frameHeight: 12 });
-    this.load.spritesheet("fluke", "/assets/fluke.png",{ frameWidth: 32, frameHeight: 32 });
+    this.load.bitmapFont('pixelFont', `${_assetsPrefix}/font/font.png`, `${_assetsPrefix}/font/font.fnt`);
+    this.load.image("platform", `${_assetsPrefix}/platform.png`);
+    this.load.image("mainTitle", `${_assetsPrefix}/wrikey_dog_title.png`);
+    this.load.spritesheet("coin", `${_assetsPrefix}/wrike_coin.png`, { frameWidth: 12, frameHeight: 12 });
+    this.load.spritesheet("fluke", `${_assetsPrefix}/fluke.png`,{ frameWidth: 32, frameHeight: 32 });
   }
 
   create(): void {
     this.platform = new Platform(this);
-    // this.coin = new Coin(this);
+    this.coin = new Coin(this);
     this.fluke = new Fluke(this);
     this.physics.add.collider(this.fluke.sprite, this.platform.platformGroup.getChildren(), (fluke, pl) => {
       let platform = pl as Phaser.Physics.Arcade.Sprite;
@@ -46,10 +49,12 @@ export class GameScene extends Phaser.Scene {
         platform.tint = 0x8BC34A;
       }
     });
-    // this.physics.add.collider(this.fluke.sprite, this.coin.coinGroup.getChildren(), (fluke, coin) => {
-    //   this.score += 100;
-    //   coin.destroy();
-    // });
+
+    this.physics.add.collider(this.fluke.sprite, this.coin.sprite, (fluke, coin) => {
+      this.coinCounter += 1;
+      coin.destroy();
+    });
+
     this.scoreText = this.add.bitmapText(24, 24, 'pixelFont', `SCORE: ${this.score}`, 16);
     this.mainTitle = new MainTitle(this);
   }
@@ -65,6 +70,7 @@ export class GameScene extends Phaser.Scene {
 
   resetGame() {
     this.counter = 0;
+    this.coinCounter = 0;
     this.level = 1;
     this.gameSpeed = gameOptions.platformStartSpeed;
   }
@@ -78,12 +84,12 @@ export class GameScene extends Phaser.Scene {
       this.gameOver();
     }
 
+    this.mainTitle.update();
     this.fluke.update();
     this.platform.update(this.gameSpeed);
-    this.mainTitle.update();
-    // this.coin.update();
+    this.coin.update();
     this.score = (this.counter / 5) ^ 0;
-    this.scoreText.setText(`SCORE: ${this.score}`);
+    this.scoreText.setText(`SCORE: ${this.score + (this.coinCounter * 100)}`);
 
     this.level = this.counter / this.levelFrameThreshold ^ 0;
     this.gameSpeed = gameOptions.platformStartSpeed + this.level * this.levelSpeedIncrease;

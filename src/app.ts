@@ -3,14 +3,15 @@ import {GameScene} from "./gameScene/gameScene";
 import GameConfig = Phaser.Types.Core.GameConfig;
 import {GameOverScene} from './gameOverScene/gameOverScene';
 
-console.log('Hello, Dima!');
-
 const config: GameConfig = {
   type: Phaser.AUTO,
   title: 'Fluke',
   width: 800,
   height: 600,
   parent: 'game',
+  scale: {
+    expandParent: true,
+  },
   physics: {
     default: "arcade",
   },

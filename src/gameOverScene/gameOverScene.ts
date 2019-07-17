@@ -1,6 +1,7 @@
 import "phaser";
 import {gameOptions} from '../gameScene/gameOptions';
 import {GameState} from '../gameState';
+const _assetsPrefix = 'assets/game_assets';
 
 export class GameOverScene extends Phaser.Scene {
   highScores = [
@@ -33,8 +34,8 @@ export class GameOverScene extends Phaser.Scene {
   }
 
   preload(): void {
-    this.load.bitmapFont('pixelFont', 'assets/font/font.png', 'assets/font/font.fnt');
-    this.load.image("gameOver", "/assets/game_over.png");
+    this.load.bitmapFont('pixelFont', `${_assetsPrefix}/font/font.png`, `${_assetsPrefix}/font/font.fnt`);
+    this.load.image("gameOver", `${_assetsPrefix}/game_over.png`);
   }
 
   create(): void {
