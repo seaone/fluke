@@ -28,4 +28,4 @@ export class FlukeGame extends Phaser.Game {
   }
 }
 
-const game = new FlukeGame(config);
+new FlukeGame(config);

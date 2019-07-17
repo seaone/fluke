@@ -14,7 +14,8 @@
   },
   "scripts": {
     "build": "webpack",
-    "start": "webpack --watch & live-server --port=8085"
+    "start": "webpack --watch & live-server --port=8085",
+    "deploy": "npm run build && cp dist/app.js ../wrike-ws-host-app/web/assets/wrike_game/app.js"
   },
   "author": "",
   "license": "MIT"
