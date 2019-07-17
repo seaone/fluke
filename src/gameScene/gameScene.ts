@@ -33,8 +33,14 @@ export class GameScene extends Phaser.Scene {
     this.platform = new Platform(this);
     // this.coin = new Coin(this);
     this.fluke = new Fluke(this);
-    this.physics.add.collider(this.fluke.sprite, this.platform.platformGroup.getChildren(), (fluke, platform) => {
-      (platform as Phaser.Physics.Arcade.Sprite).tint = 0x8BC34A;
+    this.physics.add.collider(this.fluke.sprite, this.platform.platformGroup.getChildren(), (fluke, pl) => {
+      let platform = pl as Phaser.Physics.Arcade.Sprite;
+
+      if (platform.body.touching.left || platform.body.touching.right) {
+        this.gameSpeed = 0;
+      } else {
+        platform.tint = 0x8BC34A;
+      }
     });
     // this.physics.add.collider(this.fluke.sprite, this.coin.coinGroup.getChildren(), (fluke, coin) => {
     //   this.score += 100;

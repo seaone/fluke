@@ -16,7 +16,7 @@ const config: GameConfig = {
   },
   scene: [GameScene],
   autoFocus: true,
-  backgroundColor: "#18216D",
+  backgroundColor: "#003366",
   render: {
     pixelArt: true
   }
