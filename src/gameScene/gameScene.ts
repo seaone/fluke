@@ -35,6 +35,8 @@ export class GameScene extends Phaser.Scene {
     this.load.image("mainTitle", `${_assetsPrefix}/wrikey_dog_title.png`);
     this.load.spritesheet("coin", `${_assetsPrefix}/wrike_coin.png`, { frameWidth: 12, frameHeight: 12 });
     this.load.spritesheet("fluke", `${_assetsPrefix}/fluke.png`,{ frameWidth: 32, frameHeight: 32 });
+    this.load.audio("coinSound1", `${_assetsPrefix}/sound/coin_1.wav`);
+    this.load.audio("drop", `${_assetsPrefix}/sound/drop.wav`);
   }
 
   create(): void {
@@ -55,6 +57,7 @@ export class GameScene extends Phaser.Scene {
     this.physics.add.overlap(this.fluke.sprite, this.coinGroup.coinGroup.getChildren(), (player, coin) => {
       if (coin.active) {
         this.coinCounter++;
+        this.coinGroup.playCollectSound();
       }
 
       this.coinGroup.coinGroup.killAndHide(coin);

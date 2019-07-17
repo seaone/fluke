@@ -6,6 +6,7 @@ export class CoinGroup {
   public coinGroup: Phaser.Physics.Arcade.StaticGroup;
   private coinPool: Phaser.Physics.Arcade.StaticGroup;
   private nextCoinDistance: number;
+  private collectSound: Phaser.Sound.BaseSound;
 
   constructor(private _scene: Phaser.Scene) {
     this.create(this._scene);
@@ -30,6 +31,8 @@ export class CoinGroup {
       frameRate: 12,
       repeat: -1,
     });
+
+    this.collectSound = this._scene.sound.add('coinSound1');
   }
 
   public update(): void {
@@ -79,5 +82,10 @@ export class CoinGroup {
     if(sprite.body) {
       sprite.anims.play('rotate', true);
     }
+  }
+
+  public playCollectSound(): void {
+    if(this.collectSound.isPlaying) return;
+    this.collectSound.play();
   }
 }

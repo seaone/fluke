@@ -6,6 +6,7 @@ export class Fluke {
   public sprite: Phaser.Physics.Arcade.Sprite;
   private jumpTimer: number;
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+  private dropSound: Phaser.Sound.BaseSound;
 
   constructor(private _scene: Phaser.Scene) {
     this.create(this._scene);
@@ -44,6 +45,7 @@ export class Fluke {
       repeat: 0,
     });
 
+    this.dropSound = this._scene.sound.add('drop');
     this.cursors = this._scene.input.keyboard.createCursorKeys();
   }
 
@@ -77,6 +79,10 @@ export class Fluke {
     if (this.sprite.y > this._scene.game.config.height) {
       this._scene.cameras.main.shake(300, 0.025);
 
+      if (this.sprite.active) {
+        this.playDropSound();
+      }
+
       this._scene.time.addEvent({
         delay: 500,
         callback: () => gameOptions.gameState = GameState.over,
@@ -102,5 +108,10 @@ export class Fluke {
         this.sprite.anims.play('end_jump', true);
       }
     }
+  }
+
+  public playDropSound(): void {
+    if (this.dropSound.isPlaying) return;
+    this.dropSound.play()
   }
 }
