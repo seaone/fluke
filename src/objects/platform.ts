@@ -1,5 +1,6 @@
 import "phaser";
 import {gameOptions} from "../gameScene/gameOptions";
+import {platformColors} from "./platformColors";
 
 export class Platform {
   public platformGroup: Phaser.Physics.Arcade.StaticGroup;
@@ -66,6 +67,7 @@ export class Platform {
       this.platformPool.remove(platform);
     } else {
       platform = this._scene.physics.add.sprite(posX, posY, "platform").setScale(4);
+      platform.tint = Phaser.Math.Between(platformColors[0], platformColors.length - 1);
       platform.setImmovable(true);
       platform.setVelocityX(gameSpeed * -1);
       this.platformGroup.add(platform);
