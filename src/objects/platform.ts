@@ -28,7 +28,7 @@ export class Platform {
     this.addPlatform(+this._scene.game.config.width, +this._scene.game.config.width / 2, +this._scene.game.config.height * 0.8);
   }
 
-  public update(gameSpeed: number): void {
+  public update(): void {
     if (gameOptions.gameState !== GameState.playing) {
       return;
     }
@@ -57,11 +57,11 @@ export class Platform {
       const posX = +this._scene.game.config.width + nextPlatformWidth / 2;
       const posY = Phaser.Math.Between(+this._scene.game.config.height - 100, +this._scene.game.config.height) * 0.8;
 
-      this.addPlatform(nextPlatformWidth, posX, posY, gameSpeed);
+      this.addPlatform(nextPlatformWidth, posX, posY);
     }
   }
 
-  private addPlatform(platformWidth: number, posX: number, posY: number, gameSpeed = gameOptions.platformStartSpeed): void {
+  private addPlatform(platformWidth: number, posX: number, posY: number): void {
     let platform: Phaser.Physics.Arcade.Sprite;
 
     if (this.platformPool.getLength()) {
@@ -74,15 +74,15 @@ export class Platform {
       platform = this._scene.physics.add.sprite(posX, posY, "platform").setScale(4);
       platform.tint = Phaser.Math.Between(platformColors[0], platformColors.length - 1);
       platform.setImmovable(true);
-      platform.setVelocityX(gameSpeed * -1);
+      platform.setVelocityX(gameOptions.gameSpeed * -1);
       this.platformGroup.add(platform);
     }
 
     platform.displayWidth = platformWidth;
     if(gameOptions.gameState === GameState.playing) {
-      this.nextPlatformDistance = Phaser.Math.Between(gameOptions.spawnRange[0], gameOptions.spawnRange[1]);
+      this.nextPlatformDistance = Phaser.Math.Between(gameOptions.platformSpawnRange[0], gameOptions.platformSpawnRange[1]);
     } else {
-      this.nextPlatformDistance = gameOptions.spawnRange[0];
+      this.nextPlatformDistance = gameOptions.platformSpawnRange[0];
     }
   }
 }

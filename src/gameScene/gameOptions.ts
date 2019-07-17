@@ -5,8 +5,9 @@ export const gameOptions = {
   playerStartPosition: 160,
   jumpForce: 250,
   playerGravity: 900,
-  platformStartSpeed: 350,
-  spawnRange: [100, 350],
+  gameSpeed: 350,
+  platformSpawnRange: [100, 350],
+  coinSpawnRange: [200, 300],
   platformSizeRange: [50, 250],
   score: 0,
   playerName: 'Boris Lobanov'

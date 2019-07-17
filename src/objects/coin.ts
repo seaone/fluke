@@ -2,14 +2,18 @@ import "phaser";
 import {gameOptions} from "../gameScene/gameOptions";
 
 export class Coin {
-  public sprite: Phaser.Physics.Arcade.Sprite;
+  sprite: Phaser.Physics.Arcade.Sprite;
+  initialX: number;
 
   constructor(private _scene: Phaser.Scene) {
     this.create(this._scene);
   }
 
   private create(scene: Phaser.Scene): void {
-    this.sprite = scene.physics.add.sprite(180, 380, "coin").setScale(4);
+    this.initialX = +this._scene.game.config.width - 30;
+    this.sprite = scene.physics.add.sprite(this.initialX, 380, "coin").setScale(4);
+    this.sprite.setVelocityX(gameOptions.gameSpeed * -1);
+    this.sprite.setImmovable(true);
 
     this._scene.anims.create({
       key: 'rotate',
@@ -26,6 +30,14 @@ export class Coin {
   }
 
   public update(): void {
+    if (this.sprite.x < 20) {
+      this.destroy();
+    }
+
     this.animate();
+  }
+
+  public destroy(): void {
+    this.sprite.destroy();
   }
 }

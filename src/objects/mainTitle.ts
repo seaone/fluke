@@ -15,7 +15,7 @@ export class MainTitle {
 
   public update(): void {
     if (this.sprite.body && GameState.playing) {
-      this.sprite.setVelocityX(gameOptions.platformStartSpeed * -1);
+      this.sprite.setVelocityX(gameOptions.gameSpeed * -1);
     }
 
     if (this.sprite.x < -this.sprite.displayWidth / 2) {
