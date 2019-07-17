@@ -5,6 +5,7 @@ export const gameOptions = {
   playerStartPosition: 160,
   jumpForce: 250,
   playerGravity: 900,
+  initialGameSpeed: 350,
   gameSpeed: 350,
   platformSpawnRange: [100, 350],
   coinSpawnRange: [200, 300],
