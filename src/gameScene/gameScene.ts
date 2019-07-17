@@ -7,6 +7,7 @@ import { gameOptions } from "./gameOptions";
 const _assetsPrefix = 'assets/game_assets';
 import {GameState} from '../gameState';
 import {HintTitle} from "../objects/hintTitle";
+import {Background} from "../objects/background";
 
 export class GameScene extends Phaser.Scene {
   fluke: Fluke;
@@ -25,6 +26,7 @@ export class GameScene extends Phaser.Scene {
   coinFrequency = 150;
   private themeSound: Phaser.Sound.BaseSound;
   private hintTitle: HintTitle;
+  private background: Background;
 
   constructor() {
     super({
@@ -37,6 +39,7 @@ export class GameScene extends Phaser.Scene {
     this.load.image("platform", `${_assetsPrefix}/platform.png`);
     this.load.image("mainTitle", `${_assetsPrefix}/wrikey_dog_title.png`);
     this.load.image("hintTitle", `${_assetsPrefix}/hint_title.png`);
+    this.load.image("background", `${_assetsPrefix}/background.png`);
     this.load.spritesheet("coin", `${_assetsPrefix}/wrike_coin.png`, { frameWidth: 12, frameHeight: 12 });
     this.load.spritesheet("fluke", `${_assetsPrefix}/fluke.png`,{ frameWidth: 32, frameHeight: 32 });
     this.load.audio("coinSound1", `${_assetsPrefix}/sound/coin_1.wav`);
@@ -45,9 +48,10 @@ export class GameScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.coinGroup = new CoinGroup(this);
+    this.background = new Background(this);
     this.platform = new Platform(this);
     this.fluke = new Fluke(this);
+    this.coinGroup = new CoinGroup(this);
     this.physics.add.collider(this.fluke.sprite, this.platform.platformGroup.getChildren(), (fluke, pl) => {
       let platform = pl as Phaser.Physics.Arcade.Sprite;
 
@@ -121,5 +125,6 @@ export class GameScene extends Phaser.Scene {
 
     this.level = (this.counter / this.levelFrameThreshold) ^ 0;
     gameOptions.gameSpeed = gameOptions.initialGameSpeed + this.level * this.levelSpeedIncrease;
+    this.background.parallax();
   }
 }

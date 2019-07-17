@@ -24,7 +24,7 @@ export class GameOverScene extends Phaser.Scene {
       score: 480,
     },
     {
-      name: 'Press space to start',
+      name: 'Dimasik',
       score: 358,
     }
   ];
