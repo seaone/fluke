@@ -75,7 +75,12 @@ export class Fluke {
 
   private respawn(sceneName: string): void {
     if (this.sprite.y > this._scene.game.config.height) {
-      gameOptions.gameState = GameState.over;
+      this._scene.cameras.main.shake(300, 0.025);
+
+      this._scene.time.addEvent({
+        delay: 500,
+        callback: () => gameOptions.gameState = GameState.over,
+      });
     }
 
     this.sprite.x = gameOptions.playerStartPosition;

@@ -46,7 +46,8 @@ export class GameScene extends Phaser.Scene {
       if (platform.body.touching.left || platform.body.touching.right) {
         this.gameSpeed = 0;
       } else {
-        platform.tint = 0x8BC34A;
+        platform.clearTint();
+        if(!platform.isTinted) platform.tint = 0x8BC34A;
       }
     });
 
