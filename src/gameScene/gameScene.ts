@@ -6,17 +6,17 @@ import {MainTitle} from "../objects/mainTitle";
 import {Coin} from '../objects/coin';
 
 export class GameScene extends Phaser.Scene {
-  private fluke: Fluke;
-  private platform: Platform;
+  fluke: Fluke;
+  platform: Platform;
   private mainTitle: MainTitle;
   // private coin: Coin;
-  private score: number = 0;
-  private counter = 0;
-  private scoreText: Phaser.GameObjects.Text;
-  private fontStyle = {
-    font: "16px 'PressStart'",
-    fill: "#fff",
-  };
+  score: number = 0;
+  counter = 0;
+  scoreText: Phaser.GameObjects.BitmapText;
+  gameSpeed = gameOptions.platformStartSpeed;
+  level = 1;
+  levelFrameThreshold = 500;
+  levelSpeedIncrease = 50;
 
   constructor() {
     super({
@@ -25,6 +25,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   preload(): void {
+    this.load.bitmapFont('pixelFont', 'assets/font/font.png', 'assets/font/font.fnt');
     this.load.image("platform", "/assets/platform.png");
     this.load.image("mainTitle", "/assets/wrikey_dog_title.png");
     this.load.spritesheet("coin", "/assets/wrike_coin.png", { frameWidth: 12, frameHeight: 12 });
@@ -42,7 +43,7 @@ export class GameScene extends Phaser.Scene {
     //   this.score += 100;
     //   coin.destroy();
     // });
-    this.scoreText = this.add.text(24, 16, `score: ${this.score}`, this.fontStyle);
+    this.scoreText = this.add.bitmapText(24, 24, 'pixelFont', `SCORE: ${this.score}`, 16);
     this.mainTitle = new MainTitle(this);
   }
 
@@ -50,18 +51,26 @@ export class GameScene extends Phaser.Scene {
     if (gameOptions.isStarted) {
       this.counter++;
     } else {
-      this.counter = 0;
+      this.resetGame();
     }
+  }
+
+  resetGame() {
+    this.counter = 0;
+    this.level = 1;
+    this.gameSpeed = gameOptions.platformStartSpeed;
   }
 
   update(): void {
     this.updateCounter();
     this.fluke.update();
-    this.platform.update();
+    this.platform.update(this.gameSpeed);
     this.mainTitle.update();
     // this.coin.update();
-
     this.score = (this.counter / 5) ^ 0;
-    this.scoreText.setText(`score: ${this.score}`);
+    this.scoreText.setText(`SCORE: ${this.score}`);
+
+    this.level = this.counter / this.levelFrameThreshold ^ 0;
+    this.gameSpeed = gameOptions.platformStartSpeed + this.level * this.levelSpeedIncrease;
   }
 }

@@ -23,10 +23,10 @@ export class Platform {
       }
     });
 
-    this.addPlatform(this._scene.game.config.width, +this._scene.game.config.width / 2, +this._scene.game.config.height * 0.8);
+    this.addPlatform(+this._scene.game.config.width, +this._scene.game.config.width / 2, +this._scene.game.config.height * 0.8);
   }
 
-  public update(): void {
+  public update(gameSpeed: number): void {
     let minDistance: number = +this._scene.game.config.width;
 
     this.platformGroup.getChildren().forEach((platform: Phaser.Physics.Arcade.Sprite) => {
@@ -51,11 +51,11 @@ export class Platform {
       const posX = +this._scene.game.config.width + nextPlatformWidth / 2;
       const posY = Phaser.Math.Between(+this._scene.game.config.height - 100, +this._scene.game.config.height) * 0.8;
 
-      this.addPlatform(nextPlatformWidth, posX, posY);
+      this.addPlatform(nextPlatformWidth, posX, posY, gameSpeed);
     }
   }
 
-  private addPlatform(platformWidth, posX, posY): void {
+  private addPlatform(platformWidth: number, posX: number, posY: number, gameSpeed = gameOptions.platformStartSpeed): void {
     let platform: Phaser.Physics.Arcade.Sprite;
 
     if (this.platformPool.getLength()) {
@@ -67,7 +67,7 @@ export class Platform {
     } else {
       platform = this._scene.physics.add.sprite(posX, posY, "platform").setScale(4);
       platform.setImmovable(true);
-      platform.setVelocityX(gameOptions.platformStartSpeed * -1);
+      platform.setVelocityX(gameSpeed * -1);
       this.platformGroup.add(platform);
     }
 
