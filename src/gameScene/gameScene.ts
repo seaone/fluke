@@ -6,6 +6,8 @@ import {gameOptions} from "./gameOptions";
 export class GameScene extends Phaser.Scene {
   private fluke: Fluke;
   private platform: Platform;
+  private score = 0;
+  private scoreText: Phaser.GameObjects.Text;
 
   constructor() {
     super({
@@ -21,15 +23,16 @@ export class GameScene extends Phaser.Scene {
 
   create(): void {
     this.platform = new Platform(this);
-
     this.fluke = new Fluke(this);
-
     this.physics.add.collider(this.fluke.sprite, this.platform.platformGroup.getChildren());
+    this.scoreText = this.add.text(24, 16, `score: ${this.score}`, { fontSize: '32px', fill: '#fff' });
     this.add.image(+this.game.config.width / 2, +this.game.config.height / 4, 'mainTitle');
   }
 
-  update():void {
+  update(): void {
+    this.score++;
     this.fluke.update();
     this.platform.update();
+    this.scoreText.setText(`score: ${this.score}`);
   }
 }

@@ -54,7 +54,7 @@ export class Fluke {
   }
 
   private jump(): void {
-    if (this.cursors.space.isDown || this._scene.input.activePointer.leftButtonDown()) {
+    if (this.cursors.space.isDown || this.cursors.up.isDown || this._scene.input.activePointer.leftButtonDown()) {
       if (!gameOptions.isStarted) {
         this.sprite.setGravityY(this.gameOptions.playerGravity);
         gameOptions.isStarted = true;
