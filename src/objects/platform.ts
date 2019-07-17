@@ -72,7 +72,12 @@ export class Platform {
       this.platformPool.remove(platform);
     } else {
       platform = this._scene.physics.add.sprite(posX, posY, "platform").setScale(4);
-      platform.tint = Phaser.Math.Between(platformColors[0], platformColors.length - 1);
+
+      if(platform.isTinted) {
+        platform.clearTint();
+      }
+
+      platform.tint = platformColors[Phaser.Math.Between(0, platformColors.length - 1)];
       platform.setImmovable(true);
       platform.setVelocityX(gameSpeed * -1);
       this.platformGroup.add(platform);
