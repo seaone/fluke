@@ -14,6 +14,7 @@ export class GameScene extends Phaser.Scene {
   private coin: Coin;
   score: number = 0;
   counter = 0;
+  coinCounter = 0;
   scoreText: Phaser.GameObjects.BitmapText;
   gameSpeed = gameOptions.platformStartSpeed;
   level = 1;
@@ -49,7 +50,7 @@ export class GameScene extends Phaser.Scene {
     });
 
     this.physics.add.collider(this.fluke.sprite, this.coin.sprite, (fluke, coin) => {
-      this.counter += 1000;
+      this.coinCounter += 1;
       coin.destroy();
     });
 
@@ -78,7 +79,7 @@ export class GameScene extends Phaser.Scene {
     this.platform.update(this.gameSpeed);
     this.coin.update();
     this.score = (this.counter / 5) ^ 0;
-    this.scoreText.setText(`SCORE: ${this.score}`);
+    this.scoreText.setText(`SCORE: ${this.score + (this.coinCounter * 100)}`);
 
     this.level = this.counter / this.levelFrameThreshold ^ 0;
     this.gameSpeed = gameOptions.platformStartSpeed + this.level * this.levelSpeedIncrease;
