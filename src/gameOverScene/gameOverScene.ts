@@ -75,8 +75,8 @@ export class GameOverScene extends Phaser.Scene {
     const startingY = 373;
     const fontSize = 13;
 
-    this.add.bitmapText(nameX, 300, 'pixelFont', `TOP PLAYERS`, fontSize);
-    this.add.bitmapText(scoreX, 300, 'pixelFont', `SCORE`, fontSize);
+    this.add.bitmapText(nameX, 336, 'pixelFont', `TOP PLAYERS`, fontSize);
+    this.add.bitmapText(scoreX, 336, 'pixelFont', `SCORE`, fontSize);
 
     if (this.score > allScores[4].score) {
       let scores = allScores.slice(0, 4);
@@ -100,7 +100,7 @@ export class GameOverScene extends Phaser.Scene {
         this.add.bitmapText(scoreX + 28, startingY + i * 28, 'pixelFont', `${data.score}`, fontSize);
       });
 
-      this.add.bitmapText(nameX, startingY + 5 * 32, 'pixelFont', `. . .`, fontSize);
+      this.add.bitmapText(nameX, startingY + 5 * 28, 'pixelFont', `. . .`, fontSize);
 
       const name = this.add.bitmapText(nameX, startingY + 6 * 28, 'pixelFont', `${gameOptions.playerName}`, fontSize);
       const score = this.add.bitmapText(scoreX + 28, startingY + 6 * 28, 'pixelFont', `${this.score}`, fontSize);
