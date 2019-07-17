@@ -56,8 +56,6 @@ export class Fluke {
   private jump(): void {
     const isPressed = this.cursors.space.isDown || this.cursors.up.isDown || this._scene.input.activePointer.leftButtonDown();
 
-    console.log(isPressed);
-
     if (isPressed && gameOptions.gameState !== GameState.playing) {
       this.sprite.setGravityY(gameOptions.playerGravity);
       gameOptions.gameState = GameState.playing;

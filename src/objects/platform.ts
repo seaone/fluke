@@ -29,10 +29,6 @@ export class Platform {
   }
 
   public update(gameSpeed: number): void {
-    if (gameOptions.gameState !== GameState.playing) {
-      return;
-    }
-
     let minDistance: number = +this._scene.game.config.width;
 
     this.platformGroup.getChildren().forEach((platform: Phaser.Physics.Arcade.Sprite) => {
