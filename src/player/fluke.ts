@@ -64,21 +64,22 @@ export class Fluke {
     }
 
     if (isPressed) {
-      if (this.sprite.body.touching.down && this.jumpTimer === 0) {
+      if (this.sprite.body.touching.down && this.jumpTimer === 0 || this.canDoubleJump) {
         this.jumpTimer = 1;
-        this.canDoubleJump = true;
+        this.jumpCounter++;
+        this.canDoubleJump = false;
       } else if (this.jumpTimer > 0 && this.jumpTimer < 30) {
         this.jumpTimer++;
         this.sprite.setVelocityY(gameOptions.jumpForce * -1 + (this.jumpTimer * 4));
       }
     } else {
-      if (this.jumpTimer < 30 && this.canDoubleJump) {
-        console.log('can double jump');
-        this.canDoubleJump = false;
+      this.canDoubleJump = this.jumpCounter < 2;
+
+      if (this.sprite.body.touching.down) {
+        this.jumpCounter = 0;
       }
 
       this.jumpTimer = 0;
-      this.jumpCounter++;
     }
   }
 
