@@ -49,17 +49,19 @@ export class Fluke {
 
   public update(): void {
     this.animate();
-    this.respawn(this._scene.scene.key);
     this.jump();
+    this.respawn(this._scene.scene.key);
   }
 
   private jump(): void {
-    if (this.cursors.space.isDown || this.cursors.up.isDown || this._scene.input.activePointer.leftButtonDown()) {
-      if (gameOptions.gameState !== GameState.playing) {
-        this.sprite.setGravityY(gameOptions.playerGravity);
-        gameOptions.gameState = GameState.playing;
-      }
+    const isPressed = this.cursors.space.isDown || this.cursors.up.isDown || this._scene.input.activePointer.leftButtonDown();
 
+    if (isPressed && gameOptions.gameState !== GameState.playing) {
+      this.sprite.setGravityY(gameOptions.playerGravity);
+      gameOptions.gameState = GameState.playing;
+    }
+
+    if (isPressed) {
       if (this.sprite.body.touching.down && this.jumpTimer === 0) {
         this.jumpTimer = 1;
       } else if (this.jumpTimer > 0 && this.jumpTimer < 30) {
@@ -73,8 +75,12 @@ export class Fluke {
 
   private respawn(sceneName: string): void {
     if (this.sprite.y > this._scene.game.config.height) {
-      gameOptions.gameState = GameState.over;
-      this._scene.scene.start(sceneName);
+      this._scene.cameras.main.shake(300, 0.025);
+
+      this._scene.time.addEvent({
+        delay: 500,
+        callback: () => gameOptions.gameState = GameState.over,
+      });
     }
 
     this.sprite.x = gameOptions.playerStartPosition;

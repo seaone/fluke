@@ -21,6 +21,7 @@ export class GameScene extends Phaser.Scene {
   levelFrameThreshold = 500;
   levelSpeedIncrease = 50;
   coinValue = 25;
+  coinFrequency = 200;
 
   constructor() {
     super({
@@ -46,7 +47,8 @@ export class GameScene extends Phaser.Scene {
       if (platform.body.touching.left || platform.body.touching.right) {
         this.gameSpeed = 0;
       } else {
-        platform.tint = 0x8BC34A;
+        platform.clearTint();
+        if(!platform.isTinted) platform.tint = 0x8BC34A;
       }
     });
 
@@ -82,8 +84,8 @@ export class GameScene extends Phaser.Scene {
     if (gameOptions.gameState === GameState.playing) {
       this.updateCounter();
 
-      if (this.counter % 200 === 0) {
-        this.coinGroup.addCoin(1000, Phaser.Math.Between(+this.game.config.height - 350, +this.game.config.height - 300));
+      if (this.counter % this.coinFrequency === 0) {
+        this.coinGroup.addCoin(1000, Phaser.Math.Between(+this.game.config.height - 400, +this.game.config.height - 300));
       }
     } else if (gameOptions.gameState === GameState.initial) {
       this.resetGame();

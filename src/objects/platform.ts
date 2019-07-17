@@ -29,10 +29,6 @@ export class Platform {
   }
 
   public update(): void {
-    if (gameOptions.gameState !== GameState.playing) {
-      return;
-    }
-
     let minDistance: number = +this._scene.game.config.width;
 
     this.platformGroup.getChildren().forEach((platform: Phaser.Physics.Arcade.Sprite) => {
@@ -72,13 +68,19 @@ export class Platform {
       this.platformPool.remove(platform);
     } else {
       platform = this._scene.physics.add.sprite(posX, posY, "platform").setScale(4);
-      platform.tint = Phaser.Math.Between(platformColors[0], platformColors.length - 1);
+
+      if(platform.isTinted) {
+        platform.clearTint();
+      }
+
+      platform.tint = platformColors[Phaser.Math.Between(0, platformColors.length - 1)];
       platform.setImmovable(true);
       platform.setVelocityX(gameOptions.gameSpeed * -1);
       this.platformGroup.add(platform);
     }
 
     platform.displayWidth = platformWidth;
+
     if(gameOptions.gameState === GameState.playing) {
       this.nextPlatformDistance = Phaser.Math.Between(gameOptions.platformSpawnRange[0], gameOptions.platformSpawnRange[1]);
     } else {

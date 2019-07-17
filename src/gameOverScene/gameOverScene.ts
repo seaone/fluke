@@ -45,21 +45,33 @@ export class GameOverScene extends Phaser.Scene {
     this.cameras.main.setBackgroundColor("#000000");
     this.score = gameOptions.score;
 
-    const restartBtn = this.add.bitmapText(360, 213, 'pixelFont', `RESTART`, 18);
+    const restartBtn = this.add.bitmapText(360, 213, 'pixelFont', `RESTART`, 13);
     restartBtn.setInteractive();
-    restartBtn.on('pointerdown', () => {
+    restartBtn.on('pointerover', () => {
+      if(!restartBtn.isTinted) restartBtn.tint = 0x8BC34A;
+    });
+    restartBtn.on('pointerout', () => {
+      restartBtn.clearTint();
+    });
+    restartBtn.on('pointerup', () => {
       this.scene.stop();
       this.scene.start('GameScene');
       gameOptions.gameState = GameState.initial;
     });
 
-    const exitGameBtn = this.add.bitmapText(340, 245, 'pixelFont', `EXIT GAME`, 18);
+    const exitGameBtn = this.add.bitmapText(360, 245, 'pixelFont', `EXIT GAME`, 13);
     exitGameBtn.setInteractive();
-    exitGameBtn.on('pointerdown', () => {
+    exitGameBtn.on('pointerover', () => {
+      if(!exitGameBtn.isTinted) exitGameBtn.tint = 0xe91e63;
+    });
+    exitGameBtn.on('pointerout', () => {
+      exitGameBtn.clearTint();
+    });
+    exitGameBtn.on('pointerup', () => {
       console.log('exit game not implemented');
     });
 
-    this.add.image(+this.game.config.width / 2 + 20, 120, 'gameOver');
+    this.add.image(+this.game.config.width / 2, 127, 'gameOver');
   }
 
   update(): void {
@@ -70,13 +82,13 @@ export class GameOverScene extends Phaser.Scene {
     let allScores = highScores.slice();
     allScores.sort((a, b) => b.score - a.score);
 
-    const nameX = 250;
-    const scoreX = 484;
-    const startingY = 340;
-    const fontSize = 16;
+    const nameX = 240;
+    const scoreX = 496;
+    const startingY = 373;
+    const fontSize = 13;
 
-    this.add.bitmapText(nameX, 300, 'pixelFont', `TOP PLAYERS`, fontSize);
-    this.add.bitmapText(scoreX, 300, 'pixelFont', `SCORE`, fontSize);
+    this.add.bitmapText(nameX, 336, 'pixelFont', `TOP PLAYERS`, fontSize);
+    this.add.bitmapText(scoreX, 336, 'pixelFont', `SCORE`, fontSize);
 
     if (this.score > allScores[4].score) {
       let scores = allScores.slice(0, 4);
@@ -84,8 +96,8 @@ export class GameOverScene extends Phaser.Scene {
       scores.sort((a, b) => b.score - a.score);
 
       scores.forEach((data, i) => {
-        const name = this.add.bitmapText(nameX, startingY + i * 32, 'pixelFont', `${data.name}`, fontSize);
-        const score = this.add.bitmapText(scoreX + 36, startingY + i * 32, 'pixelFont', `${data.score}`, fontSize);
+        const name = this.add.bitmapText(nameX, startingY + i * 28, 'pixelFont', `${data.name.toUpperCase()}`, fontSize);
+        const score = this.add.bitmapText(scoreX + 28, startingY + i * 28, 'pixelFont', `${data.score}`, fontSize);
 
         if (data.name === gameOptions.playerName && data.score === this.score) {
           name.tint = 0xe91e63;
@@ -96,14 +108,14 @@ export class GameOverScene extends Phaser.Scene {
       let scores = allScores.slice(0, 5);
 
       scores.forEach((data, i) => {
-        this.add.bitmapText(nameX, startingY + i * 32, 'pixelFont', `${data.name}`, fontSize);
-        this.add.bitmapText(scoreX + 36, startingY + i * 32, 'pixelFont', `${data.score}`, fontSize);
+        this.add.bitmapText(nameX, startingY + i * 28, 'pixelFont', `${data.name.toUpperCase()}`, fontSize);
+        this.add.bitmapText(scoreX + 28, startingY + i * 28, 'pixelFont', `${data.score}`, fontSize);
       });
 
-      this.add.bitmapText(nameX, startingY + 5 * 32, 'pixelFont', `. . .`, fontSize);
+      this.add.bitmapText(nameX, startingY + 5 * 28, 'pixelFont', `. . .`, fontSize);
 
-      const name = this.add.bitmapText(nameX, startingY + 6 * 32, 'pixelFont', `${gameOptions.playerName}`, fontSize);
-      const score = this.add.bitmapText(scoreX + 36, startingY + 6 * 32, 'pixelFont', `${this.score}`, fontSize);
+      const name = this.add.bitmapText(nameX, startingY + 6 * 28, 'pixelFont', `${gameOptions.playerName.toUpperCase()}`, fontSize);
+      const score = this.add.bitmapText(scoreX + 28, startingY + 6 * 28, 'pixelFont', `${this.score}`, fontSize);
 
       name.tint = 0xe91e63;
       score.tint = 0xe91e63;

@@ -5,5 +5,4 @@ export const platformColors = [
   0x009588,
   0x9c27b0,
   0xe91d63,
-  0x8BC34A,
 ];
