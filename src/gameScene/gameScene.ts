@@ -68,6 +68,7 @@ export class GameScene extends Phaser.Scene {
 
   resetGame() {
     this.counter = 0;
+    this.coinCounter = 0;
     this.level = 1;
     this.gameSpeed = gameOptions.platformStartSpeed;
   }
