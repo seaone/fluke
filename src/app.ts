@@ -2,6 +2,8 @@ import "phaser";
 import GameConfig = Phaser.Types.Core.GameConfig;
 import {GameScene} from "./gameScene/gameScene";
 
+console.log('Hello, Dima!');
+
 const config: GameConfig = {
   type: Phaser.AUTO,
   title: 'Fluke',
