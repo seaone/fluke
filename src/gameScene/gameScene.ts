@@ -2,7 +2,6 @@ import "phaser";
 import {gameOptions} from "./gameOptions";
 import {Fluke} from "../player/fluke";
 import {Platform} from "../objects/platform";
-import {Coin} from '../objects/coin';
 
 export class GameScene extends Phaser.Scene {
   private fluke: Fluke;
@@ -10,11 +9,7 @@ export class GameScene extends Phaser.Scene {
   // private coin: Coin;
   private score: number = 0;
   private counter = 0;
-  private scoreText: Phaser.GameObjects.Text;
-  private fontStyle = {
-    font: "16px 'PressStart'",
-    fill: "#fff",
-  };
+  private scoreText: Phaser.GameObjects.BitmapText;
 
   constructor() {
     super({
@@ -23,6 +18,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   preload(): void {
+    this.load.bitmapFont('myFont', 'assets/font/font.png', 'assets/font/font.fnt');
     this.load.image("platform", "/assets/platform.png");
     // this.load.image("coin", "/assets/wrike_coin.png");
     this.load.image("mainTitle", "/assets/wrikey_dog_title.png");
@@ -40,7 +36,7 @@ export class GameScene extends Phaser.Scene {
     //   this.score += 100;
     //   coin.destroy();
     // });
-    this.scoreText = this.add.text(24, 16, `score: ${this.score}`, this.fontStyle);
+    this.scoreText = this.add.bitmapText(24, 16, 'myFont', `score: ${this.score}`, 16);
     this.add.image(+this.game.config.width / 2, +this.game.config.height / 4, 'mainTitle');
   }
 
