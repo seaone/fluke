@@ -14,7 +14,7 @@
   },
   "scripts": {
     "build": "webpack",
-    "start": "webpack --watch & live-server --port=8085"
+    "start": "webpack --watch & live-server --port=8086"
   },
   "author": "",
   "license": "MIT"
