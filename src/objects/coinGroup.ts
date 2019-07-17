@@ -23,6 +23,13 @@ export class CoinGroup {
         this.scene.coinGroup.add(coin)
       }
     });
+
+    this._scene.anims.create({
+      key: 'rotate',
+      frames: this._scene.anims.generateFrameNumbers('coin', {start: 0, end: 5}),
+      frameRate: 12,
+      repeat: -1,
+    });
   }
 
   public update(): void {
@@ -40,6 +47,8 @@ export class CoinGroup {
         this.coinGroup.killAndHide(coin);
         this.coinGroup.remove(coin);
       }
+
+      this.animate(coin);
     });
   }
 
@@ -63,6 +72,12 @@ export class CoinGroup {
       this.nextCoinDistance = Phaser.Math.Between(gameOptions.coinSpawnRange[0], gameOptions.coinSpawnRange[1]);
     } else {
       this.nextCoinDistance = gameOptions.coinSpawnRange[0];
+    }
+  }
+
+  private animate(sprite): void {
+    if(sprite.body) {
+      sprite.anims.play('rotate', true);
     }
   }
 }

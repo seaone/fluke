@@ -11,7 +11,7 @@ export class GameScene extends Phaser.Scene {
   fluke: Fluke;
   platform: Platform;
   coinGroup: CoinGroup;
-  private mainTitle: MainTitle;
+  mainTitle: MainTitle;
   score: number = 0;
   counter = 0;
   coinCounter = 0;
@@ -20,8 +20,8 @@ export class GameScene extends Phaser.Scene {
   level = 1;
   levelFrameThreshold = 500;
   levelSpeedIncrease = 50;
-  coinValue = 25;
-  coinFrequency = 200;
+  coinValue = 50;
+  coinFrequency = 150;
 
   constructor() {
     super({
