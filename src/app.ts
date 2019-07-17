@@ -1,6 +1,6 @@
 import "phaser";
+import { GameScene } from "./gameScene/gameScene";
 import GameConfig = Phaser.Types.Core.GameConfig;
-import {GameScene} from "./gameScene/gameScene";
 
 const config: GameConfig = {
   type: Phaser.AUTO,
@@ -28,6 +28,4 @@ export class FlukeGame extends Phaser.Game {
   }
 }
 
-window.onload = () => {
-  const game = new FlukeGame(config);
-};
+new FlukeGame(config);
