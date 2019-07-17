@@ -7,5 +7,7 @@ export const gameOptions = {
   playerGravity: 900,
   platformStartSpeed: 350,
   spawnRange: [100, 350],
-  platformSizeRange: [50, 250]
+  platformSizeRange: [50, 250],
+  score: 0,
+  playerName: 'Boris Lobanov'
 };

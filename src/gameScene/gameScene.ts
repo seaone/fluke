@@ -81,6 +81,7 @@ export class GameScene extends Phaser.Scene {
     } else if (gameOptions.gameState === GameState.initial) {
       this.resetGame();
     } else if (gameOptions.gameState === GameState.over) {
+      gameOptions.score = this.score;
       this.gameOver();
     }
 
@@ -88,8 +89,8 @@ export class GameScene extends Phaser.Scene {
     this.fluke.update();
     this.platform.update(this.gameSpeed);
     this.coin.update();
-    this.score = (this.counter / 5) ^ 0;
-    this.scoreText.setText(`SCORE: ${this.score + (this.coinCounter * 100)}`);
+    this.score = ((this.counter / 5) ^ 0) + (this.coinCounter * 100);
+    this.scoreText.setText(`SCORE: ${this.score}`);
 
     this.level = this.counter / this.levelFrameThreshold ^ 0;
     this.gameSpeed = gameOptions.platformStartSpeed + this.level * this.levelSpeedIncrease;
