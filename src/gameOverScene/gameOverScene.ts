@@ -47,6 +47,12 @@ export class GameOverScene extends Phaser.Scene {
 
     const restartBtn = this.add.bitmapText(360, 213, 'pixelFont', `RESTART`, 13);
     restartBtn.setInteractive();
+    restartBtn.on('pointerover', () => {
+      if(!restartBtn.isTinted) restartBtn.tint = 0x8BC34A;
+    });
+    restartBtn.on('pointerout', () => {
+      restartBtn.clearTint();
+    });
     restartBtn.on('pointerup', () => {
       this.scene.stop();
       this.scene.start('GameScene');
@@ -55,6 +61,12 @@ export class GameOverScene extends Phaser.Scene {
 
     const exitGameBtn = this.add.bitmapText(360, 245, 'pixelFont', `EXIT GAME`, 13);
     exitGameBtn.setInteractive();
+    exitGameBtn.on('pointerover', () => {
+      if(!exitGameBtn.isTinted) exitGameBtn.tint = 0xe91e63;
+    });
+    exitGameBtn.on('pointerout', () => {
+      exitGameBtn.clearTint();
+    });
     exitGameBtn.on('pointerup', () => {
       console.log('exit game not implemented');
     });
