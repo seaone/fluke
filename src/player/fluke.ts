@@ -55,7 +55,8 @@ export class Fluke {
   }
 
   private jump(): void {
-    if (this.cursors.space.isDown) {
+
+    if (this.cursors.space.isDown || this.cursors.up.isDown) {
       if (this.sprite.body.touching.down && this.jumpTimer === 0) {
         this.jumpTimer = 1;
       } else if (this.jumpTimer > 0 && this.jumpTimer < 30) {
