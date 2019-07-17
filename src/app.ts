@@ -2,6 +2,8 @@ import "phaser";
 import { GameScene } from "./gameScene/gameScene";
 import GameConfig = Phaser.Types.Core.GameConfig;
 
+console.log('Hello, Dima!');
+
 const config: GameConfig = {
   type: Phaser.AUTO,
   title: 'Fluke',
@@ -19,7 +21,7 @@ const config: GameConfig = {
   },
   scene: [GameScene],
   autoFocus: true,
-  backgroundColor: "#18216D",
+  backgroundColor: "#003366",
   render: {
     pixelArt: true
   }
