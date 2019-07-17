@@ -5,6 +5,7 @@ import { Fluke } from "../player/fluke";
 import { Coin } from "../objects/coin";
 import { gameOptions } from "./gameOptions";
 const _assetsPrefix = 'assets/game_assets';
+import {GameState} from '../gameState';
 
 export class GameScene extends Phaser.Scene {
 
@@ -59,11 +60,12 @@ export class GameScene extends Phaser.Scene {
   }
 
   updateCounter(): void {
-    if (gameOptions.isStarted) {
-      this.counter++;
-    } else {
-      this.resetGame();
-    }
+    this.counter++;
+  }
+
+  gameOver() {
+    this.scene.stop();
+    this.scene.start('GameOverScene');
   }
 
   resetGame() {
@@ -74,7 +76,14 @@ export class GameScene extends Phaser.Scene {
   }
 
   update(): void {
-    this.updateCounter();
+    if (gameOptions.gameState === GameState.playing) {
+      this.updateCounter();
+    } else if (gameOptions.gameState === GameState.initial) {
+      this.resetGame();
+    } else if (gameOptions.gameState === GameState.over) {
+      this.gameOver();
+    }
+
     this.mainTitle.update();
     this.fluke.update();
     this.platform.update(this.gameSpeed);

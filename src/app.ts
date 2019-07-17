@@ -1,6 +1,7 @@
 import "phaser";
-import { GameScene } from "./gameScene/gameScene";
+import {GameScene} from "./gameScene/gameScene";
 import GameConfig = Phaser.Types.Core.GameConfig;
+import {GameOverScene} from './gameOverScene/gameOverScene';
 
 const config: GameConfig = {
   type: Phaser.AUTO,
@@ -13,11 +14,8 @@ const config: GameConfig = {
   },
   physics: {
     default: "arcade",
-    // arcade: {
-    //   debug: true,
-    // }
   },
-  scene: [GameScene],
+  scene: [GameScene, GameOverScene],
   autoFocus: true,
   backgroundColor: "#003366",
   render: {
