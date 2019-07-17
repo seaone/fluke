@@ -47,7 +47,7 @@ export class GameOverScene extends Phaser.Scene {
 
     const restartBtn = this.add.bitmapText(360, 213, 'pixelFont', `RESTART`, 18);
     restartBtn.setInteractive();
-    restartBtn.on('pointerdown', () => {
+    restartBtn.on('pointerup', () => {
       this.scene.stop();
       this.scene.start('GameScene');
       gameOptions.gameState = GameState.initial;
@@ -55,7 +55,7 @@ export class GameOverScene extends Phaser.Scene {
 
     const exitGameBtn = this.add.bitmapText(340, 245, 'pixelFont', `EXIT GAME`, 18);
     exitGameBtn.setInteractive();
-    exitGameBtn.on('pointerdown', () => {
+    exitGameBtn.on('pointerup', () => {
       console.log('exit game not implemented');
     });
 

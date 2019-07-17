@@ -84,6 +84,7 @@ export class Platform {
     }
 
     platform.displayWidth = platformWidth;
+
     if(gameOptions.gameState === GameState.playing) {
       this.nextPlatformDistance = Phaser.Math.Between(gameOptions.spawnRange[0], gameOptions.spawnRange[1]);
     } else {
