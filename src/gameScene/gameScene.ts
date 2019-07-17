@@ -22,6 +22,7 @@ export class GameScene extends Phaser.Scene {
   levelSpeedIncrease = 50;
   coinValue = 50;
   coinFrequency = 150;
+  private themeSound: Phaser.Sound.BaseSound;
 
   constructor() {
     super({
@@ -36,6 +37,7 @@ export class GameScene extends Phaser.Scene {
     this.load.spritesheet("coin", `${_assetsPrefix}/wrike_coin.png`, { frameWidth: 12, frameHeight: 12 });
     this.load.spritesheet("fluke", `${_assetsPrefix}/fluke.png`,{ frameWidth: 32, frameHeight: 32 });
     this.load.audio("coinSound1", `${_assetsPrefix}/sound/coin_1.wav`);
+    this.load.audio("theme", `${_assetsPrefix}/sound/theme.mp3`);
     this.load.audio("drop", `${_assetsPrefix}/sound/drop.wav`);
   }
 
@@ -65,6 +67,7 @@ export class GameScene extends Phaser.Scene {
 
     this.scoreText = this.add.bitmapText(24, 24, 'pixelFont', `SCORE: ${this.score}`, 16);
     this.mainTitle = new MainTitle(this);
+    this.themeSound = this.sound.add('theme');
   }
 
   updateCounter(): void {
@@ -90,10 +93,17 @@ export class GameScene extends Phaser.Scene {
       if (this.counter % this.coinFrequency === 0) {
         this.coinGroup.addCoin(1000, Phaser.Math.Between(+this.game.config.height - 400, +this.game.config.height - 300));
       }
+
+      if(!this.themeSound.isPlaying) {
+        this.themeSound.play('', {
+          volume: 0.3,
+        });
+      }
     } else if (gameOptions.gameState === GameState.initial) {
       this.resetGame();
     } else if (gameOptions.gameState === GameState.over) {
       gameOptions.score = this.score;
+      this.themeSound.destroy();
       this.gameOver();
     }
 
