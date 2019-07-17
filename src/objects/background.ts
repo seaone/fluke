@@ -1,5 +1,4 @@
 import "phaser";
-import {gameOptions} from "../gameScene/gameOptions";
 
 export class Background extends Phaser.GameObjects.TileSprite {
   constructor(scene: Phaser.Scene) {
@@ -10,6 +9,6 @@ export class Background extends Phaser.GameObjects.TileSprite {
   }
 
   parallax() {
-    this.tilePositionX += 2;
+    this.tilePositionX += 1;
   }
 }
