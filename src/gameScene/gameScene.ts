@@ -1,9 +1,11 @@
 import "phaser";
-import {gameOptions} from "./gameOptions";
-import {Fluke} from "../player/fluke";
-import {Platform} from "../objects/platform";
+import { Platform } from "../objects/platform";
+import { Fluke } from "../player/fluke";
+import { gameOptions } from "./gameOptions";
+const _assetsPrefix = 'game_assets';
 
 export class GameScene extends Phaser.Scene {
+
   fluke: Fluke;
   platform: Platform;
   // private coin: Coin;
@@ -22,11 +24,11 @@ export class GameScene extends Phaser.Scene {
   }
 
   preload(): void {
-    this.load.bitmapFont('pixelFont', 'assets/font/font.png', 'assets/font/font.fnt');
-    this.load.image("platform", "/assets/platform.png");
-    // this.load.image("coin", "/assets/wrike_coin.png");
-    this.load.image("mainTitle", "/assets/wrikey_dog_title.png");
-    this.load.spritesheet("fluke", "/assets/fluke.png",{ frameWidth: 32, frameHeight: 32 });
+    this.load.bitmapFont(`pixelFont`, `${_assetsPrefix}/font/font.png`, `${_assetsPrefix}/font/font.fnt`);
+    this.load.image(`platform`, `${_assetsPrefix}/platform.png`);
+    // this.load.image(`coin`, `${_assetsPrefix}/wrike_coin.png`);
+    this.load.image(`mainTitle`, `${_assetsPrefix}/wrikey_dog_title.png`);
+    this.load.spritesheet(`fluke`, `${_assetsPrefix}/fluke.png`,{ frameWidth: 32, frameHeight: 32 });
   }
 
   create(): void {

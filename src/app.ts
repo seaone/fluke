@@ -8,6 +8,9 @@ const config: GameConfig = {
   width: 800,
   height: 600,
   parent: 'game',
+  scale: {
+    expandParent: true,
+  },
   physics: {
     default: "arcade",
     // arcade: {
