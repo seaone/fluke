@@ -16,11 +16,11 @@ export class GameScene extends Phaser.Scene {
   platform: Platform;
   coinGroup: CoinGroup;
   mainTitle: MainTitle;
-  score: number = 0;
+  score: number = gameOptions.score;
   counter = 0;
   coinCounter = 0;
   scoreText: Phaser.GameObjects.BitmapText;
-  gameSpeed = gameOptions.gameSpeed;
+  private hiscoreText: Phaser.GameObjects.BitmapText;
   level = 1;
   levelFrameThreshold = 500;
   levelSpeedIncrease = 50;
@@ -93,6 +93,8 @@ export class GameScene extends Phaser.Scene {
     }, this);
 
     this.scoreText = this.add.bitmapText(24, 24, 'pixelFont', `SCORE: ${this.score}`, 16);
+    this.hiscoreText = this.add.bitmapText(this.scoreText.width + 48, 28, 'pixelFont', `HISCORE: ${gameOptions.hiscore}`, 12);
+    this.hiscoreText.alpha = 0.5;
     this.mainTitle = new MainTitle(this);
     this.hintTitle = new HintTitle(this);
     this.themeSound = this.sound.add('theme');
@@ -125,7 +127,7 @@ export class GameScene extends Phaser.Scene {
       if (gameOptions.soundIsOn) {
         if (!this.themeSound.isPlaying) {
           this.themeSound.play('', {
-            volume: 0.25,
+            volume: 0.33,
           });
         }
       } else {
@@ -135,6 +137,11 @@ export class GameScene extends Phaser.Scene {
       this.resetGame();
     } else if (gameOptions.gameState === GameState.over) {
       gameOptions.score = this.score;
+
+      if (this.score > gameOptions.hiscore) {
+        gameOptions.hiscore = this.score;
+      }
+
       this.themeSound.destroy();
       this.gameOver();
     }
@@ -146,6 +153,8 @@ export class GameScene extends Phaser.Scene {
     this.coinGroup.update();
     this.score = ((this.counter / 5) ^ 0) + (this.coinCounter * this.coinValue);
     this.scoreText.setText(`SCORE: ${this.score}`);
+    this.hiscoreText.setText(`HISCORE: ${gameOptions.hiscore}`);
+    this.hiscoreText.x = this.scoreText.width + 48;
 
     this.level = (this.counter / this.levelFrameThreshold) ^ 0;
     gameOptions.gameSpeed = gameOptions.initialGameSpeed + this.level * this.levelSpeedIncrease;
