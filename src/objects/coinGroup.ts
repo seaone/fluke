@@ -32,7 +32,7 @@ export class CoinGroup {
       repeat: -1,
     });
 
-    this.collectSound = this._scene.sound.add('coinSound1');
+    this.collectSound = this._scene.sound.add('coinSound');
   }
 
   public update(): void {
@@ -86,6 +86,6 @@ export class CoinGroup {
 
   public playCollectSound(): void {
     if(this.collectSound.isPlaying) return;
-    this.collectSound.play();
+    if (gameOptions.soundIsOn) this.collectSound.play();
   }
 }

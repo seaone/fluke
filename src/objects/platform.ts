@@ -6,6 +6,7 @@ import {GameState} from '../gameState';
 export class Platform {
   public platformGroup: Phaser.Physics.Arcade.StaticGroup;
   private platformPool: Phaser.Physics.Arcade.StaticGroup;
+  collisionSound: Phaser.Sound.BaseSound;
   private nextPlatformDistance: number;
 
   constructor(private _scene: Phaser.Scene) {
@@ -26,6 +27,8 @@ export class Platform {
     });
 
     this.addPlatform(+this._scene.game.config.width, +this._scene.game.config.width / 2, +this._scene.game.config.height * 0.8);
+
+    this.collisionSound = this._scene.sound.add('platformSound');
   }
 
   public update(): void {
@@ -86,5 +89,12 @@ export class Platform {
     } else {
       this.nextPlatformDistance = gameOptions.platformSpawnRange[0];
     }
+  }
+
+  public playCollisionSound(): void {
+    if(this.collisionSound.isPlaying) return;
+    if (gameOptions.soundIsOn) this.collisionSound.play('', {
+      volume: 0.25,
+    });
   }
 }

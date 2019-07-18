@@ -10,13 +10,21 @@ export class SoundToggleButton {
   }
 
   private create(scene: Phaser.Scene): void {
-    this.sprite = scene.physics.add.sprite(+scene.game.config.width - 24, 24, "soundIcon");
+    this.sprite = scene.physics.add.sprite(+scene.game.config.width - 32, 32, "soundIcon").setScale(2);
+
+    if (gameOptions.soundIsOn) {
+      this.sprite.setFrame(0);
+      this.sprite.clearTint();
+    } else {
+      this.sprite.setFrame(1);
+      this.sprite.tint = 0xe91d63;
+    }
   }
 
   public toggle(): void {
-    this.isOn = !this.isOn;
+    gameOptions.soundIsOn = !gameOptions.soundIsOn;
 
-    if (this.isOn) {
+    if (gameOptions.soundIsOn) {
       this.sprite.setFrame(0);
       this.sprite.clearTint();
     } else {

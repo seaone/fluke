@@ -45,8 +45,9 @@ export class GameScene extends Phaser.Scene {
     this.load.image("background", `${_assetsPrefix}/background.png`);
     this.load.spritesheet("coin", `${_assetsPrefix}/wrike_coin.png`, {frameWidth: 12, frameHeight: 12});
     this.load.spritesheet("fluke", `${_assetsPrefix}/fluke.png`, {frameWidth: 32, frameHeight: 32});
-    this.load.spritesheet("soundIcon", `${_assetsPrefix}/sound_icon.png`, {frameWidth: 24, frameHeight: 24});
-    this.load.audio("coinSound1", `${_assetsPrefix}/sound/coin_1.wav`);
+    this.load.spritesheet("soundIcon", `${_assetsPrefix}/sound_icon.png`, {frameWidth: 16, frameHeight: 16});
+    this.load.audio("coinSound", `${_assetsPrefix}/sound/coin.wav`);
+    this.load.audio("platformSound", `${_assetsPrefix}/sound/platform.wav`);
     this.load.audio("theme", `${_assetsPrefix}/sound/theme.mp3`);
     this.load.audio("drop", `${_assetsPrefix}/sound/drop.wav`);
   }
@@ -61,21 +62,29 @@ export class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.fluke.sprite, this.platform.platformGroup.getChildren(), (fluke, pl) => {
       let platform = pl as Phaser.Physics.Arcade.Sprite;
 
-      if (platform.body.touching.left || platform.body.touching.right) {
-        this.gameSpeed = 0;
+      if (this.fluke.sprite.body.touching.left || this.fluke.sprite.body.touching.right || this.fluke.sprite.body.touching.up) {
+        this.fluke.isTouchPlatformEdge = true;
       } else {
-        platform.clearTint();
-        if (!platform.isTinted) platform.tint = 0x8BC34A;
+        this.fluke.isTouchPlatformEdge = false;
+
+        if (platform.active) {
+          platform.tint = 0x8BC34A;
+          this.platform.playCollisionSound();
+          platform.active = false;
+        }
       }
     });
 
     this.physics.add.overlap(this.fluke.sprite, this.coinGroup.coinGroup.getChildren(), (player, coin) => {
-      if (coin.active) {
+      let c = coin as Phaser.Physics.Arcade.Sprite;
+      c.disableBody();
+
+      if (c.active) {
         this.coinCounter++;
         this.coinGroup.playCollectSound();
       }
 
-      this.coinGroup.coinGroup.killAndHide(coin);
+      this.coinGroup.coinGroup.killAndHide(c);
     });
 
     this.soundToggleButton.sprite.setInteractive();
@@ -113,10 +122,14 @@ export class GameScene extends Phaser.Scene {
         this.coinGroup.addCoin(1000, Phaser.Math.Between(+this.game.config.height - 400, +this.game.config.height - 300));
       }
 
-      if (!this.themeSound.isPlaying) {
-        this.themeSound.play('', {
-          volume: 0.5,
-        });
+      if (gameOptions.soundIsOn) {
+        if (!this.themeSound.isPlaying) {
+          this.themeSound.play('', {
+            volume: 0.25,
+          });
+        }
+      } else {
+        this.themeSound.pause();
       }
     } else if (gameOptions.gameState === GameState.initial) {
       this.resetGame();
