@@ -14,6 +14,9 @@ const config: GameConfig = {
   },
   physics: {
     default: "arcade",
+    // arcade: {
+    //   debug: true
+    // }
   },
   scene: [GameScene, GameOverScene],
   autoFocus: true,
