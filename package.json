@@ -15,7 +15,8 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack --watch & live-server --port=8086",
-    "deploy": "npm run build && cp dist/app.js ../wrike-ws-host-app/web/assets/wrike_game/app.js && cp -R assets/game_assets ../wrike-ws-host-app/web/assets/"
+    "deploy": "npm run build && cp dist/app.js ../wrike-ws-host-app/web/assets/wrike_game/app.js && cp -R assets/game_assets ../wrike-ws-host-app/web/assets/",
+    "real-deploy": "npm run build && ditto dist/ deploy/dist && ditto assets/ deploy/assets && ditto index.html deploy/ && surge deploy/ fluke-game.surge.sh && rm -rf deploy"
   },
   "author": "",
   "license": "MIT"

@@ -1,11 +1,12 @@
 import "phaser";
+import { GameState } from '../gameState';
+import { CoinGroup } from "../objects/coinGroup";
 import { MainTitle } from "../objects/mainTitle";
 import { Platform } from "../objects/platform";
 import { Fluke } from "../player/fluke";
-import {CoinGroup} from "../objects/coinGroup";
 import { gameOptions } from "./gameOptions";
+
 const _assetsPrefix = 'assets/game_assets';
-import {GameState} from '../gameState';
 
 export class GameScene extends Phaser.Scene {
   fluke: Fluke;
