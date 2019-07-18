@@ -11,5 +11,6 @@ export const gameOptions = {
   coinSpawnRange: [200, 300],
   platformSizeRange: [50, 250],
   score: 0,
+  hiscore: 0,
   playerName: 'Player 1'
 };

@@ -8,6 +8,7 @@ export class Fluke {
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   canDoubleJump = true;
   jumpCounter = 0;
+  public isTouchPlatformEdge: boolean = false;
   private dropSound: Phaser.Sound.BaseSound;
 
   constructor(private _scene: Phaser.Scene) {
@@ -15,9 +16,9 @@ export class Fluke {
   }
 
   private create(scene: Phaser.Scene): void {
-    this.sprite = scene.physics.add.sprite(gameOptions.playerStartPosition, +scene.game.config.height / 2, "fluke").setScale(4);
-    this.sprite.body.setSize(16, 18);
-    this.sprite.body.setOffset(9, 7);
+    this.sprite = scene.physics.add.sprite(gameOptions.playerStartPosition, +scene.game.config.height / 2, "fluke");
+    this.sprite.body.setSize(68, 68);
+    this.sprite.body.setOffset(32, 32);
 
     this._scene.anims.create({
       key: 'run',
@@ -55,6 +56,20 @@ export class Fluke {
     this.animate();
     this.jump();
     this.respawn(this._scene.scene.key);
+
+    if (this.sprite.body.touching.down) this.isTouchPlatformEdge = false;
+
+    if (!this.isTouchPlatformEdge) {
+      if (this.sprite.x < gameOptions.playerStartPosition - 24) {
+        if(this.sprite.body.touching.down) {
+          this.sprite.x += gameOptions.gameSpeed/24;
+        } else {
+          this.sprite.x += gameOptions.gameSpeed/48;
+        }
+      } else {
+        this.sprite.x  = gameOptions.playerStartPosition;
+      }
+    }
   }
 
   private jump(): void {
@@ -98,8 +113,6 @@ export class Fluke {
         callback: () => gameOptions.gameState = GameState.over,
       });
     }
-
-    this.sprite.x = gameOptions.playerStartPosition;
   }
 
   private animate(): void {
@@ -122,6 +135,7 @@ export class Fluke {
 
   public playDropSound(): void {
     if (this.dropSound.isPlaying) return;
-    this.dropSound.play()
+
+    if (gameOptions.soundIsOn) this.dropSound.play()
   }
 }
