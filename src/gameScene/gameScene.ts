@@ -1,13 +1,15 @@
 import "phaser";
-import { MainTitle } from "../objects/mainTitle";
-import { Platform } from "../objects/platform";
-import { Fluke } from "../player/fluke";
+import {MainTitle} from "../objects/mainTitle";
+import {Platform} from "../objects/platform";
+import {Fluke} from "../player/fluke";
 import {CoinGroup} from "../objects/coinGroup";
-import { gameOptions } from "./gameOptions";
-const _assetsPrefix = 'assets/game_assets';
+import {gameOptions} from "./gameOptions";
 import {GameState} from '../gameState';
 import {HintTitle} from "../objects/hintTitle";
 import {Background} from "../objects/background";
+import {SoundToggleButton} from "../controls/soundToggleButton";
+
+const _assetsPrefix = 'assets/game_assets';
 
 export class GameScene extends Phaser.Scene {
   fluke: Fluke;
@@ -27,6 +29,7 @@ export class GameScene extends Phaser.Scene {
   private themeSound: Phaser.Sound.BaseSound;
   private hintTitle: HintTitle;
   private background: Background;
+  private soundToggleButton: SoundToggleButton;
 
   constructor() {
     super({
@@ -40,8 +43,9 @@ export class GameScene extends Phaser.Scene {
     this.load.image("mainTitle", `${_assetsPrefix}/wrikey_dog_title.png`);
     this.load.image("hintTitle", `${_assetsPrefix}/hint_title.png`);
     this.load.image("background", `${_assetsPrefix}/background.png`);
-    this.load.spritesheet("coin", `${_assetsPrefix}/wrike_coin.png`, { frameWidth: 12, frameHeight: 12 });
-    this.load.spritesheet("fluke", `${_assetsPrefix}/fluke.png`,{ frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet("coin", `${_assetsPrefix}/wrike_coin.png`, {frameWidth: 12, frameHeight: 12});
+    this.load.spritesheet("fluke", `${_assetsPrefix}/fluke.png`, {frameWidth: 32, frameHeight: 32});
+    this.load.spritesheet("soundIcon", `${_assetsPrefix}/sound_icon.png`, {frameWidth: 24, frameHeight: 24});
     this.load.audio("coinSound1", `${_assetsPrefix}/sound/coin_1.wav`);
     this.load.audio("theme", `${_assetsPrefix}/sound/theme.mp3`);
     this.load.audio("drop", `${_assetsPrefix}/sound/drop.wav`);
@@ -52,6 +56,8 @@ export class GameScene extends Phaser.Scene {
     this.platform = new Platform(this);
     this.fluke = new Fluke(this);
     this.coinGroup = new CoinGroup(this);
+    this.soundToggleButton = new SoundToggleButton(this);
+
     this.physics.add.collider(this.fluke.sprite, this.platform.platformGroup.getChildren(), (fluke, pl) => {
       let platform = pl as Phaser.Physics.Arcade.Sprite;
 
@@ -59,7 +65,7 @@ export class GameScene extends Phaser.Scene {
         this.gameSpeed = 0;
       } else {
         platform.clearTint();
-        if(!platform.isTinted) platform.tint = 0x8BC34A;
+        if (!platform.isTinted) platform.tint = 0x8BC34A;
       }
     });
 
@@ -71,6 +77,11 @@ export class GameScene extends Phaser.Scene {
 
       this.coinGroup.coinGroup.killAndHide(coin);
     });
+
+    this.soundToggleButton.sprite.setInteractive();
+    this.soundToggleButton.sprite.on('pointerup', () => {
+      this.soundToggleButton.toggle();
+    }, this);
 
     this.scoreText = this.add.bitmapText(24, 24, 'pixelFont', `SCORE: ${this.score}`, 16);
     this.mainTitle = new MainTitle(this);
@@ -102,9 +113,9 @@ export class GameScene extends Phaser.Scene {
         this.coinGroup.addCoin(1000, Phaser.Math.Between(+this.game.config.height - 400, +this.game.config.height - 300));
       }
 
-      if(!this.themeSound.isPlaying) {
+      if (!this.themeSound.isPlaying) {
         this.themeSound.play('', {
-          volume: 0.3,
+          volume: 0.5,
         });
       }
     } else if (gameOptions.gameState === GameState.initial) {

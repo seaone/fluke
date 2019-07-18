@@ -2,6 +2,7 @@ import {GameState} from '../gameState';
 
 export const gameOptions = {
   gameState: GameState.initial,
+  soundIsOn: true,
   playerStartPosition: 160,
   jumpForce: 250,
   playerGravity: 900,
