@@ -10,7 +10,7 @@ export class SoundToggleButton {
   }
 
   private create(scene: Phaser.Scene): void {
-    this.sprite = scene.physics.add.sprite(+scene.game.config.width - 32, 32, "soundIcon").setScale(2);
+    this.sprite = scene.physics.add.sprite(+scene.game.config.width - 32, 32, "soundIcon");
 
     if (gameOptions.soundIsOn) {
       this.sprite.setFrame(0);

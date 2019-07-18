@@ -70,7 +70,7 @@ export class Platform {
       platform.visible = true;
       this.platformPool.remove(platform);
     } else {
-      platform = this._scene.physics.add.sprite(posX, posY, "platform").setScale(4);
+      platform = this._scene.physics.add.sprite(posX, posY, "platform");
 
       if(platform.isTinted) {
         platform.clearTint();

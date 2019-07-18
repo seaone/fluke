@@ -65,7 +65,7 @@ export class CoinGroup {
       coin.visible = true;
       this.coinPool.remove(coin);
     } else {
-      coin = this._scene.physics.add.sprite(posX, posY, 'coin').setScale(4);
+      coin = this._scene.physics.add.sprite(posX, posY, 'coin');
       coin.setImmovable(true);
       coin.setVelocityX(gameOptions.gameSpeed * -1);
       this.coinGroup.add(coin);
