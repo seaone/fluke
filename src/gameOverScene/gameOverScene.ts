@@ -88,6 +88,7 @@ export class GameOverScene extends Phaser.Scene {
     const fontSize = 13;
 
     this.add.bitmapText(nameX, 336, 'pixelFont', `TOP PLAYERS`, fontSize);
+    this.add.bitmapText(24, 24, 'pixelFont', `Music by Eric Skiff`, 10);
     this.add.bitmapText(scoreX, 336, 'pixelFont', `SCORE`, fontSize);
 
     if (this.score > allScores[4].score) {
