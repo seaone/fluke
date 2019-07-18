@@ -1,6 +1,6 @@
 import "phaser";
-import {gameOptions} from '../gameScene/gameOptions';
-import {GameState} from '../gameState';
+import { gameOptions } from '../gameScene/gameOptions';
+import { GameState } from '../gameState';
 const _assetsPrefix = 'assets/game_assets';
 
 export class GameOverScene extends Phaser.Scene {

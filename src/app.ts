@@ -32,4 +32,4 @@ export class FlukeGame extends Phaser.Game {
 
 new FlukeGame(config);
 
-window.onmessage = (ev: MessageEvent) => onMessage(ev.data);
+window.onmessage = (ev: MessageEvent) => onMessage(ev.data)
