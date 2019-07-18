@@ -1,7 +1,8 @@
 import "phaser";
-import {GameScene} from "./gameScene/gameScene";
+import { GameOverScene } from './gameOverScene/gameOverScene';
+import { GameScene } from "./gameScene/gameScene";
+import onMessage from './services/ws_bus';
 import GameConfig = Phaser.Types.Core.GameConfig;
-import {GameOverScene} from './gameOverScene/gameOverScene';
 
 const config: GameConfig = {
   type: Phaser.AUTO,
@@ -30,3 +31,5 @@ export class FlukeGame extends Phaser.Game {
 }
 
 new FlukeGame(config);
+
+window.onmessage = (ev: MessageEvent) => onMessage(ev.data)

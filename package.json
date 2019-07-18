@@ -7,15 +7,18 @@
   "devDependencies": {
     "live-server": "^1.2.1",
     "phaser": "^3.18.1",
+    "surge": "^0.21.3",
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.3",
     "webpack": "^4.35.3",
-    "webpack-cli": "^3.3.6"
+    "webpack-cli": "^3.3.6",
+    "webpack-merge": "^4.2.1"
   },
   "scripts": {
-    "build": "webpack",
-    "start": "webpack --watch & live-server --port=8086",
-    "deploy": "npm run build && cp dist/app.js ../wrike-ws-host-app/web/assets/wrike_game/app.js && cp -R assets/game_assets ../wrike-ws-host-app/web/assets/"
+    "build": "webpack --config webpack.prod.js",
+    "start": "webpack --watch --config webpack.dev.js & live-server --port=8086",
+    "deploy": "npm run build && cp dist/app.js ../wrike-ws-host-app/web/assets/wrike_game/app.js && cp -R assets/game_assets ../wrike-ws-host-app/web/assets/",
+    "real-deploy": "npm run build && ditto dist/ deploy/dist && ditto assets/ deploy/assets && ditto index.html deploy/ && surge deploy/ fluke-game.surge.sh && rm -rf deploy"
   },
   "author": "",
   "license": "MIT"

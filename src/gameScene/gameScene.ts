@@ -1,13 +1,13 @@
 import "phaser";
-import {MainTitle} from "../objects/mainTitle";
-import {Platform} from "../objects/platform";
-import {Fluke} from "../player/fluke";
-import {CoinGroup} from "../objects/coinGroup";
-import {gameOptions} from "./gameOptions";
-import {GameState} from '../gameState';
-import {HintTitle} from "../objects/hintTitle";
-import {Background} from "../objects/background";
-import {SoundToggleButton} from "../controls/soundToggleButton";
+import { SoundToggleButton } from "../controls/soundToggleButton";
+import { GameState } from '../gameState';
+import { Background } from "../objects/background";
+import { CoinGroup } from "../objects/coinGroup";
+import { HintTitle } from "../objects/hintTitle";
+import { MainTitle } from "../objects/mainTitle";
+import { Platform } from "../objects/platform";
+import { Fluke } from "../player/fluke";
+import { gameOptions } from "./gameOptions";
 
 const _assetsPrefix = 'assets/game_assets';
 
