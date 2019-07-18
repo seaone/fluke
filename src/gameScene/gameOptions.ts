@@ -11,5 +11,5 @@ export const gameOptions = {
   coinSpawnRange: [200, 300],
   platformSizeRange: [50, 250],
   score: 0,
-  playerName: 'Boris Lobanov'
+  playerName: 'Player 1'
 };
