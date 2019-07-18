@@ -16,9 +16,9 @@ export class Fluke {
   }
 
   private create(scene: Phaser.Scene): void {
-    this.sprite = scene.physics.add.sprite(gameOptions.playerStartPosition, +scene.game.config.height / 2, "fluke").setScale(4);
-    this.sprite.body.setSize(16, 18);
-    this.sprite.body.setOffset(9, 7);
+    this.sprite = scene.physics.add.sprite(gameOptions.playerStartPosition, +scene.game.config.height / 2, "fluke");
+    this.sprite.body.setSize(68, 68);
+    //this.sprite.body.setOffset(9, 7);
 
     this._scene.anims.create({
       key: 'run',

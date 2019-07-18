@@ -1,4 +1,5 @@
 import "phaser";
+import {gameOptions} from "../gameScene/gameOptions";
 
 export class Background extends Phaser.GameObjects.TileSprite {
   constructor(_scene: Phaser.Scene) {

@@ -17,10 +17,7 @@ const config: GameConfig = {
   },
   scene: [GameScene, GameOverScene],
   autoFocus: true,
-  backgroundColor: "#003366",
-  render: {
-    pixelArt: true
-  }
+  backgroundColor: "#003366"
 };
 
 export class FlukeGame extends Phaser.Game {

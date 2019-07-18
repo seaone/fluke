@@ -42,9 +42,9 @@ export class GameScene extends Phaser.Scene {
     this.load.image("platform", `${_assetsPrefix}/platform.png`);
     this.load.image("mainTitle", `${_assetsPrefix}/wrikey_dog_title.png`);
     this.load.image("hintTitle", `${_assetsPrefix}/hint_title.png`);
-    this.load.image("background", `${_assetsPrefix}/background.png`);
+    this.load.image("background", `${_assetsPrefix}/background_2.png`);
     this.load.spritesheet("coin", `${_assetsPrefix}/wrike_coin.png`, {frameWidth: 12, frameHeight: 12});
-    this.load.spritesheet("fluke", `${_assetsPrefix}/fluke.png`, {frameWidth: 32, frameHeight: 32});
+    this.load.spritesheet("fluke", `${_assetsPrefix}/fluke.png`, {frameWidth: 128, frameHeight: 128});
     this.load.spritesheet("soundIcon", `${_assetsPrefix}/sound_icon.png`, {frameWidth: 16, frameHeight: 16});
     this.load.audio("coinSound", `${_assetsPrefix}/sound/coin.wav`);
     this.load.audio("platformSound", `${_assetsPrefix}/sound/platform.wav`);
