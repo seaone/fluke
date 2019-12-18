@@ -6,6 +6,7 @@ const _assetsPrefix = 'assets/game_assets';
 export class GameOverScene extends Phaser.Scene {
   score: number;
   highScores: {name: string, score: number}[];
+  private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   mockHighScores = [
     {
       name: 'Boris Lobanov',
@@ -44,6 +45,7 @@ export class GameOverScene extends Phaser.Scene {
     this.highScores = this.mockHighScores;
     this.cameras.main.setBackgroundColor("#000000");
     this.score = gameOptions.score;
+    this.cursors = this.input.keyboard.createCursorKeys();
 
     const restartBtn = this.add.bitmapText(348, 223, 'pixelFont', `RESTART`, 16);
     restartBtn.setInteractive();
@@ -54,6 +56,20 @@ export class GameOverScene extends Phaser.Scene {
       restartBtn.clearTint();
     });
     restartBtn.on('pointerup', () => {
+      this.scene.stop();
+      this.scene.start('GameScene');
+      gameOptions.gameState = GameState.initial;
+    });
+
+    const spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    spacebar.on('up', () => {
+      this.scene.stop();
+      this.scene.start('GameScene');
+      gameOptions.gameState = GameState.initial;
+    });
+
+    const arrowUp = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+    arrowUp.on('up', () => {
       this.scene.stop();
       this.scene.start('GameScene');
       gameOptions.gameState = GameState.initial;

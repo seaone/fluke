@@ -20,12 +20,12 @@ export class GameScene extends Phaser.Scene {
   counter = 0;
   coinCounter = 0;
   scoreText: Phaser.GameObjects.BitmapText;
-  private hiscoreText: Phaser.GameObjects.BitmapText;
   level = 1;
   levelFrameThreshold = 500;
   levelSpeedIncrease = 50;
   coinValue = 50;
   coinFrequency = 150;
+  private hiscoreText: Phaser.GameObjects.BitmapText;
   private themeSound: Phaser.Sound.BaseSound;
   private hintTitle: HintTitle;
   private background: Background;
@@ -42,7 +42,7 @@ export class GameScene extends Phaser.Scene {
     this.load.image("platform", `${_assetsPrefix}/platform.png`);
     this.load.image("mainTitle", `${_assetsPrefix}/wrikey_dog_title.png`);
     this.load.image("hintTitle", `${_assetsPrefix}/hint_title.png`);
-    this.load.image("background", `${_assetsPrefix}/background_2.png`);
+    this.load.image("background", `${_assetsPrefix}/background_snow-forest.png`);
     this.load.spritesheet("coin", `${_assetsPrefix}/wrike_coin.png`, {frameWidth: 48, frameHeight: 48});
     this.load.spritesheet("fluke", `${_assetsPrefix}/fluke.png`, {frameWidth: 128, frameHeight: 128});
     this.load.spritesheet("soundIcon", `${_assetsPrefix}/sound_icon.png`, {frameWidth: 32, frameHeight: 32});
