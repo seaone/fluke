@@ -1,34 +1,11 @@
 import "phaser";
 import { gameOptions } from '../gameScene/gameOptions';
 import { GameState } from '../gameState';
-const _assetsPrefix = 'assets/game_assets';
+const _assetsPrefix = 'assets';
 
 export class GameOverScene extends Phaser.Scene {
   score: number;
-  highScores: {name: string, score: number}[];
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
-  mockHighScores = [
-    {
-      name: 'Boris Lobanov',
-      score: 350,
-    },
-    {
-      name: 'Eugene Sanzhiev',
-      score: 220,
-    },
-    {
-      name: 'Gleb Krauklish',
-      score: 415,
-    },
-    {
-      name: 'Vladimir Kulikov',
-      score: 480,
-    },
-    {
-      name: 'Dmitry Ivanov',
-      score: 358,
-    }
-  ];
 
   constructor() {
     super({
@@ -42,26 +19,14 @@ export class GameOverScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.highScores = this.mockHighScores;
     this.cameras.main.setBackgroundColor("#000000");
     this.score = gameOptions.score;
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    const restartBtn = this.add.bitmapText(348, 223, 'pixelFont', `RESTART`, 16);
-    restartBtn.setInteractive();
-    restartBtn.on('pointerover', () => {
-      if(!restartBtn.isTinted) restartBtn.tint = 0x8BC34A;
-    });
-    restartBtn.on('pointerout', () => {
-      restartBtn.clearTint();
-    });
-    restartBtn.on('pointerup', () => {
-      this.scene.stop();
-      this.scene.start('GameScene');
-      gameOptions.gameState = GameState.initial;
-    });
+    this.add.bitmapText(257, 536, 'pixelFont', `PRESS SPACE TO RESTART`, 13);
 
     const spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
     spacebar.on('up', () => {
       this.scene.stop();
       this.scene.start('GameScene');
@@ -75,56 +40,19 @@ export class GameOverScene extends Phaser.Scene {
       gameOptions.gameState = GameState.initial;
     });
 
-    this.add.image(+this.game.config.width / 2, 127, 'gameOver');
+    this.add.image(+this.game.config.width / 2, 271, 'gameOver');
   }
 
   update(): void {
-    this.renderHighScores(this.score, this.highScores);
+    this.renderHighScores(this.score);
   }
 
-  renderHighScores(playerScore, highScores) {
-    let allScores = highScores.slice();
-    allScores.sort((a, b) => b.score - a.score);
-
-    const nameX = 240;
-    const scoreX = 496;
-    const startingY = 373;
+  renderHighScores(playerScore) {
     const fontSize = 13;
+    const scoreSize = playerScore.toString().split('').length * 8;
 
-    this.add.bitmapText(nameX, 336, 'pixelFont', `TOP PLAYERS`, fontSize);
     this.add.bitmapText(24, 24, 'pixelFont', `Music by Eric Skiff`, 10);
-    this.add.bitmapText(scoreX + 20, 336, 'pixelFont', `SCORE`, fontSize);
-
-    if (this.score > allScores[4].score) {
-      let scores = allScores.slice(0, 4);
-      scores.push({name: gameOptions.playerName, score: this.score});
-      scores.sort((a, b) => b.score - a.score);
-
-      scores.forEach((data, i) => {
-        const name = this.add.bitmapText(nameX, startingY + i * 28, 'pixelFont', `${data.name.toUpperCase()}`, fontSize);
-        const score = this.add.bitmapText(scoreX + 20, startingY + i * 28, 'pixelFont', `${this.leftPad(data.score)}`, fontSize);
-
-        if (data.name === gameOptions.playerName && data.score === this.score) {
-          name.tint = 0xe91e63;
-          score.tint = 0xe91e63;
-        }
-      });
-    } else {
-      let scores = allScores.slice(0, 5);
-
-      scores.forEach((data, i) => {
-        this.add.bitmapText(nameX, startingY + i * 28, 'pixelFont', `${data.name.toUpperCase()}`, fontSize);
-        this.add.bitmapText(scoreX + 20, startingY + i * 28, 'pixelFont', `${this.leftPad(data.score)}`, fontSize);
-      });
-
-      this.add.bitmapText(nameX, startingY + 5 * 28, 'pixelFont', `. . .`, fontSize);
-
-      const name = this.add.bitmapText(nameX, startingY + 6 * 28, 'pixelFont', `${gameOptions.playerName.toUpperCase()}`, fontSize);
-      const score = this.add.bitmapText(scoreX + 20, startingY + 6 * 28, 'pixelFont', `${this.leftPad(this.score)}`, fontSize);
-
-      name.tint = 0xe91e63;
-      score.tint = 0xe91e63;
-    }
+    this.add.bitmapText(300, 356, 'pixelFont', `YOUR SCORE: ` + playerScore.toString().padStart('4', '0'), fontSize);
   }
 
   private leftPad(num: number) {

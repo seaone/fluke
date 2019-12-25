@@ -15,7 +15,7 @@ const config: GameConfig = {
   },
   physics: {
     default: "arcade",
-    // arcade: {
+    // arcade: {onMessage
     //   debug: true
     // }
   },

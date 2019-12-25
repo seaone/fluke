@@ -9,7 +9,7 @@ import { Platform } from "../objects/platform";
 import { Fluke } from "../player/fluke";
 import { gameOptions } from "./gameOptions";
 
-const _assetsPrefix = 'assets/game_assets';
+const _assetsPrefix = 'assets';
 
 export class GameScene extends Phaser.Scene {
   fluke: Fluke;
