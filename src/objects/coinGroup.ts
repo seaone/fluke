@@ -13,15 +13,16 @@ export class CoinGroup {
   }
 
   private create(scene: Phaser.Scene): void {
-    this.coinGroup = this._scene.physics.add.staticGroup({
-      removeCallback: function (coin) {
-        this.scene.coinPool.add(coin);
-      }
-    });
 
     this.coinPool = this._scene.physics.add.staticGroup({
       removeCallback: function (coin) {
-        this.scene.coinGroup.add(coin)
+        this.scene.coinGroup?.add(coin)
+      }
+    });
+
+    this.coinGroup = this._scene.physics.add.staticGroup({
+      removeCallback: function (coin) {
+        this.scene.coinPool?.add(coin);
       }
     });
 
