@@ -16,7 +16,7 @@ export class Platform {
   private create(scene: Phaser.Scene): void {
     this.platformGroup = this._scene.physics.add.staticGroup({
       removeCallback: function (platform) {
-        this.scene.platformPool.add(platform);
+        this.scene.platformPool?.add(platform);
       }
     });
 
